@@ -54,7 +54,15 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 12)
+      const scrollY = window.scrollY
+      const fadeDistance = window.innerHeight * 0.75
+      const heroOpacity = Math.max(0, 1 - scrollY / fadeDistance)
+
+      document.documentElement.style.setProperty(
+        '--hero-bg-opacity',
+        heroOpacity.toString(),
+      )
+      setIsScrolled(scrollY > 12)
     }
 
     handleScroll()
