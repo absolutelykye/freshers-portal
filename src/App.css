@@ -359,6 +359,7 @@ main {
   border-radius: 8px;
   font-weight: 800;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .primary-button {
@@ -369,6 +370,7 @@ main {
 .secondary-button {
   color: var(--brand);
   border: 1px solid var(--border);
+  background: var(--surface);
 }
 
 .hero-section .secondary-button {
@@ -529,6 +531,11 @@ main {
   margin-bottom: 22px;
 }
 
+.gallery-preview-heading .gallery-view-button {
+  display: inline-flex;
+  margin-top: 18px;
+}
+
 .event-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -541,24 +548,25 @@ main {
   gap: 18px;
 }
 
-.explore-section {
-  min-height: 320px;
-  display: flex;
-  align-items: center;
-  border: 1px dashed var(--border);
-  border-radius: 8px;
-  margin: 44px 0;
-  padding-inline: 28px;
+.starter-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
-.explore-section .section-heading {
-  max-width: 680px;
-  margin: 0;
+.starter-card-link:hover {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14);
+  transform: translateY(-2px);
 }
 
-.explore-section p:not(.eyebrow) {
-  margin: 0;
-  color: var(--text-muted);
+.starter-card-link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }
 
 .placeholder-section {
@@ -719,7 +727,8 @@ main {
 
   .nav-links a,
   .theme-toggle,
-  .lingo-word {
+  .lingo-word,
+  .starter-card-link {
     transition: none;
   }
 }
