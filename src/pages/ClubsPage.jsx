@@ -26,7 +26,7 @@ export default function ClubsPage() {
         </Link>
         <nav className="clubs-page-nav" aria-label="Clubs page navigation">
           <Link to="/">Home</Link>
-          <Link to="/#clubs">On this site</Link>
+      
         </nav>
       </header>
 
@@ -35,9 +35,7 @@ export default function ClubsPage() {
           <p className="eyebrow">Communities</p>
           <h1 id={headingId}>Student clubs</h1>
           <p className="clubs-page-lead">
-            Placeholder summaries for ten campus groups. Tap a club’s button to read a short blurb;
-            replace names, logos, and text in <code className="clubs-page-code">src/data/clubsData.js</code>{' '}
-            when you have the real details.
+        
           </p>
         </div>
 

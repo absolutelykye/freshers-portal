@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import campusHero from '../assets/campus-hero.jpeg'
 import freshersGuideLogo from '../assets/freshers-guide-logo.png'
 import '../App.css'
+import { FaInstagram, FaLinkedin } from "react-icons/fa"
+
 
 const resources = [
   'Department notes and previous papers',
@@ -22,6 +24,8 @@ const lingoWords = [
   'hungry-house',
   'lovelace',
   'yavanika',
+  'verdad',
+
 ]
 
 const iiserLogoUrl =
@@ -57,6 +61,7 @@ export default function Home() {
   const marqueeWords = [...lingoWords, ...lingoWords]
 
   return (
+    <>
     <main>
       <nav
         className={`navbar ${isScrolled ? 'navbar-scrolled navbar-visible' : 'navbar-hidden'}`}
@@ -65,12 +70,12 @@ export default function Home() {
           <img src={freshersGuideLogo} alt="Freshers Guide logo" />
         </a>
         <div className="nav-links" aria-label="Main navigation">
-          <a href="#resources">Resources</a>
+          
           <a href="#contact">Connect</a>
-          <Link to="/clubs">Clubs</Link>
+          <a href="#clubs">Clubs</a>
           <a href="#faqs">FAQs</a>
-          <Link to="/gallery">Gallery</Link>
-          <a href="#start-here">Guides</a>
+          <a href="#gallery">Gallery</a>
+          
         </div>
       </nav>
 
@@ -189,17 +194,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section resource-section" id="resources">
-        <div className="section-heading">
-          <p className="eyebrow">Keep this handy</p>
-          <h2>Student resources</h2>
-        </div>
-        <ul className="resource-list">
-          {resources.map((resource) => (
-            <li key={resource}>{resource}</li>
-          ))}
-        </ul>
-      </section>
 
       <section className="contact-section" id="contact">
         <div>
@@ -215,5 +209,78 @@ export default function Home() {
         </a>
       </section>
     </main>
+    <footer className="footer">
+  <div className="footer-grid">
+
+    <div className="footer-brand">
+      <h2>Sangyan</h2>
+
+      <p>
+        A 2025 batch driven platform.
+      </p>
+    </div>
+
+    <div className="footer-column">
+      <h3>Explore</h3>
+
+      <a href="#clubs">Clubs</a>
+      <a href="/gallery">Gallery</a>
+      <a href="#resources">Resources</a>
+    </div>
+
+    <div className="footer-column">
+      <h3>Community</h3>
+
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      
+    </div>
+
+  </div>
+
+<div className="footer-bottom">
+  <div className="footer-credit">
+
+    <span>Made by</span>
+
+    <a
+      
+      target="_blank"
+      rel="noreferrer"
+      className="footer-credit-link"
+    >
+      Vedant
+    </a>
+
+    <span className="footer-dot">•</span>
+
+    <a
+      href="https://linkedin.com/in/vedantpardhi"
+      target="_blank"
+      rel="noreferrer"
+      className="footer-icon"
+    >
+      <FaLinkedin />
+    </a>
+
+    <span className="footer-dot">•</span>
+
+    <a
+      href="https://instagram.com/crustrohl"
+      target="_blank"
+      rel="noreferrer"
+      className="footer-icon"
+    >
+      <FaInstagram />
+    </a>
+
+  </div>
+</div>
+
+</footer>
+
+</>
   )
+  
 }
+
