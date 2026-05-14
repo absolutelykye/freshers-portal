@@ -95,7 +95,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="hero-copy">
+        <div className="hero-copy hero-glass">
           <p className="eyebrow">For first-year students</p>
           <h1>
             <span className="hero-title-line">
