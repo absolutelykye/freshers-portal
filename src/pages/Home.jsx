@@ -213,7 +213,7 @@ export default function Home() {
   <div className="footer-grid">
 
     <div className="footer-brand">
-      <h2>Sangyan</h2>
+      <h2>Freshers' Guide</h2>
 
       <p>
         A 2025 batch driven platform.
