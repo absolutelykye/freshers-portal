@@ -67,7 +67,7 @@ export default function Home() {
         <div className="nav-links" aria-label="Main navigation">
           <a href="#resources">Resources</a>
           <a href="#contact">Connect</a>
-          <a href="#clubs">Clubs</a>
+          <Link to="/clubs">Clubs</Link>
           <a href="#faqs">FAQs</a>
           <Link to="/gallery">Gallery</Link>
           <a href="#start-here">Guides</a>
@@ -130,13 +130,13 @@ export default function Home() {
           <h2>Freshers starter kit</h2>
         </div>
         <div className="starter-grid">
-          <a className="event-card starter-card-link" href="#clubs">
+          <Link className="event-card starter-card-link" to="/clubs">
             <span> </span>
             <h3>College life and Clubs</h3>
             <p>
               Take a look at all of the clubs that student body offers to make your college life more enjoyable.
             </p>
-          </a>
+          </Link>
           <a className="event-card starter-card-link" href="#contact">
             <span></span>
             <h3>Find your seniors</h3>
@@ -155,11 +155,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section placeholder-section" id="clubs">
-        <div className="section-heading">
+      <section className="section placeholder-section gallery-preview-section" id="clubs">
+        <div className="section-heading gallery-preview-heading">
           <p className="eyebrow">Communities</p>
           <h2>Clubs</h2>
-          <p>Club details can go here once you decide what to include.</p>
+          <p>
+            Browse short profiles of campus clubs—music, tech, theatre, sports, outreach, and more.
+          </p>
+          <Link className="primary-button gallery-view-button" to="/clubs">
+            Browse all clubs
+          </Link>
         </div>
       </section>
 

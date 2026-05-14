@@ -690,7 +690,13 @@ main {
 
   .primary-button,
   .secondary-button {
+    width: auto;
+    max-width: min(280px, calc(100vw - 48px));
+  }
+
+  .contact-section .primary-button {
     width: 100%;
+    max-width: 100%;
   }
 }
 

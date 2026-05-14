@@ -20,7 +20,7 @@ const allImages = import.meta.glob(
 function imagesFor(slug, title) {
   return Object.entries(allImages)
     .filter(([path]) => path.includes(`/${slug}/`))
-    .map(([path, src], index) => ({
+    .map(([, src], index) => ({
       src,
       alt: `${title} — photo ${index + 1}`,
     }))
