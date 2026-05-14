@@ -9,19 +9,28 @@
  * You do not need to send images through chat; add them locally in that folder,
  * then wire imports here (or use public URLs if you prefer).
  */
-function imagesFor(slug, title, count = 4) {
-  return Array.from({ length: count }, (_, i) => ({
-    src: `https://picsum.photos/seed/iiserbpr-${slug}-${i}/960/720`,
-    alt: `${title} — photo ${i + 1}`,
-  }))
-}
+const allImages = import.meta.glob(
+  '../assets/gallery/*/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG}',
+  {
+    eager: true,
+    import: 'default',
+  }
+)
 
+function imagesFor(slug, title) {
+  return Object.entries(allImages)
+    .filter(([path]) => path.includes(`/${slug}/`))
+    .map(([path, src], index) => ({
+      src,
+      alt: `${title} — photo ${index + 1}`,
+    }))
+}
 export const GALLERY_LOCATIONS = [
   {
     slug: 'beach',
     title: 'Beach',
     images: imagesFor('beach', 'Beach'),
-  },
+  },  
   {
     slug: 'maingate',
     title: 'IISER BPR main gate',

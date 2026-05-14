@@ -42,12 +42,6 @@ export default function GalleryPage() {
           <p className="eyebrow">Campus life</p>
           <h1>Gallery</h1>
           <p className="gallery-page-lead">
-            Browse photos by location. Add image files under{' '}
-            <code className="gallery-page-code">src/assets/gallery/</code>, one subfolder per
-            location slug (for example <code className="gallery-page-code">beach/</code>), then
-            import them in{' '}
-            <code className="gallery-page-code">src/data/galleryData.js</code> (see the comment at
-            the top of that file).
           </p>
         </div>
 

@@ -3,28 +3,6 @@ main {
   margin: 0 auto;
 }
 
-.cursor-glow {
-  position: fixed;
-  left: var(--cursor-x, -200px);
-  top: var(--cursor-y, -200px);
-  z-index: 100;
-  width: 220px;
-  height: 220px;
-  pointer-events: none;
-  border-radius: 50%;
-  background:
-    radial-gradient(
-      circle,
-      color-mix(in srgb, var(--iiser) 34%, transparent) 0%,
-      color-mix(in srgb, var(--primary) 18%, transparent) 34%,
-      transparent 70%
-    );
-  filter: blur(14px);
-  opacity: 0.86;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: screen;
-}
-
 .navbar {
   position: fixed;
   top: 0;
@@ -635,10 +613,6 @@ main {
 }
 
 @media (max-width: 760px) {
-  .cursor-glow {
-    display: none;
-  }
-
   main {
     width: min(100% - 24px, 1120px);
   }

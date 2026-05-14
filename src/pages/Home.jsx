@@ -54,29 +54,10 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    const handleCursorMove = (event) => {
-      document.documentElement.style.setProperty('--cursor-x', `${event.clientX}px`)
-      document.documentElement.style.setProperty('--cursor-y', `${event.clientY}px`)
-    }
-
-    document.addEventListener('mousemove', handleCursorMove, { passive: true })
-    document.addEventListener('pointermove', handleCursorMove, { passive: true })
-    document.addEventListener('pointerdown', handleCursorMove, { passive: true })
-
-    return () => {
-      document.removeEventListener('mousemove', handleCursorMove)
-      document.removeEventListener('pointermove', handleCursorMove)
-      document.removeEventListener('pointerdown', handleCursorMove)
-    }
-  }, [])
-
   const marqueeWords = [...lingoWords, ...lingoWords]
 
   return (
     <main>
-      <div className="cursor-glow" aria-hidden="true"></div>
-
       <nav
         className={`navbar ${isScrolled ? 'navbar-scrolled navbar-visible' : 'navbar-hidden'}`}
       >
@@ -129,7 +110,6 @@ export default function Home() {
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="#start-here">Start here</a>
-            <a className="secondary-button" href="#clubs">Explore</a>
           </div>
         </div>
       </section>
