@@ -31,50 +31,27 @@ export const GALLERY_LOCATIONS = [
     title: 'Beach',
     images: imagesFor('beach', 'Beach'),
   },  
-  {
-    slug: 'maingate',
-    title: 'IISER BPR main gate',
-    images: imagesFor('maingate', 'IISER BPR main gate'),
-  },
+
   {
     slug: 'academic-block',
     title: 'Academic block',
     images: imagesFor('academic-block', 'Academic block'),
   },
   {
-    slug: 'onestop',
-    title: 'Onestop',
-    images: imagesFor('onestop', 'Onestop'),
-  },
-  {
-    slug: 'amphitheatre',
-    title: 'Amphitheatre',
-    images: imagesFor('amphitheatre', 'Amphitheatre'),
-  },
-  {
-    slug: 'labs',
-    title: 'Labs',
-    images: imagesFor('labs', 'Labs'),
+    slug: 'mess',
+    title: 'mess',
+    images: imagesFor('mess', 'mess'),
   },
   {
     slug: 'sports-complex',
-    title: 'Sports complex',
-    images: imagesFor('sports-complex', 'Sports complex'),
+    title: 'Sports-Facilities',
+    images: imagesFor('sports-complex', 'Sports Facilities'),
   },
+
   {
-    slug: 'gh',
-    title: 'Girls hostel (GH)',
-    images: imagesFor('gh', 'Girls hostel (GH)'),
-  },
-  {
-    slug: 'bh1',
-    title: 'Boys hostel-1 (BH1)',
-    images: imagesFor('bh1', 'Boys hostel-1 (BH1)'),
-  },
-  {
-    slug: 'bh2',
-    title: 'Boys hostel-2 (BH2)',
-    images: imagesFor('bh2', 'Boys hostel-2 (BH2)'),
+    slug: 'hostels',
+    title: 'Hostels',
+    images: imagesFor('hostels', 'Hostels'),
   },
   {
     slug: 'misc',

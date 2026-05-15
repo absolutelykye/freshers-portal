@@ -33,7 +33,7 @@ export default function GalleryPage() {
         </Link>
         <nav className="gallery-page-nav" aria-label="Gallery navigation">
           <Link to="/">Home</Link>
-          <Link to="/#gallery">On this site</Link>
+          
         </nav>
       </header>
 

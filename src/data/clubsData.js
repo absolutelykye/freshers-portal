@@ -1,73 +1,149 @@
-/** Replace logos and copy with real club assets and descriptions when ready. */
+import shadjamLogo from "../assets/club logos/shadjam.webp";
+import pixophilesLogo from '../assets/club logos/pixophiles.webp';
+import lovelaceLogo from '../assets/club logos/lovelace.webp';
+import yavanikaLogo from '../assets/club logos/yavanika.webp';
+import inverseLogo from '../assets/club logos/137 inverse.webp';
+import angikalogo from '../assets/club logos/angika.webp';
+import chemshalalogo from '../assets/club logos/chemshala.webp';
+import epistemeLogo from '../assets/club logos/episteme.webp';
+import flagrologo from '../assets/club logos/flagro.webp';
+import fortresslogo from '../assets/club logos/fortress.webp';
+import iieclogo from '../assets/club logos/iiec.webp';
+import jigyansalogo from '../assets/club logos/jigyansa.webp';
+import lavidalogo from '../assets/club logos/la vida.webp';
+import naxatralogo from '../assets/club logos/naxatra.webp';
+import oasislogo from '../assets/club logos/oasis.webp';
+import projectspirallogo from '../assets/club logos/project spiral.webp';
+import qcelllogo from '../assets/club logos/qcell.webp';
+import verdadlogo from '../assets/club logos/verdad.webp';
+import vasudhalogo from '../assets/club logos/vasudha.webp';
+
+
+
 export const CLUBS = [
   {
     id: 'shadjam',
     name: 'Shadjam',
-    logo: 'https://picsum.photos/seed/club-shadjam/128/128',
+    logo: shadjamLogo,
     info:
-      'Shadjam is the go-to community for Indian classical and light music on campus. Members rehearse regularly and represent IISER Berhampur at inter-college events. Freshers can join open sessions in the first month to find their instrument or vocal niche.',
+    'Shadjam, named after the first of the seven swaras of classical music, is the music club of IISER Berhampur dedicated to keeping the spirit of music alive on campus. The club provides a creative space for students to relax, express themselves, and develop their musical skills alongside academic life. By encouraging participation in various musical activities and performances, Shadjam aims to nurture talent and promote a vibrant musical culture within the institute.'
   },
   {
     id: 'pixophiles',
     name: 'Pixophiles',
-    logo: 'https://picsum.photos/seed/club-pixophiles/128/128',
+    logo: pixophilesLogo,
     info:
-      'Pixophiles brings together photographers and visual storytellers who document campus life and workshops. You will learn composition, editing basics, and how to cover club events responsibly. No professional gear is required to start—just curiosity.',
+    'At Pixophiles, we’re a curious mix — some chart star maps, others balance chemical equations, model climates, decode genomes, or write code. But no matter what we study by day, we all pause when light hits just right and the world calls for a click. United by a love for capturing stories — of people, places, and fleeting moments — we welcome everyone, from DSLR veterans to casual phone photographers, to frame the world with wonder, one shot at a time.'
   },
   {
     id: 'lovelace',
     name: 'Lovelace',
-    logo: 'https://picsum.photos/seed/club-lovelace/128/128',
+    logo: lovelaceLogo,
     info:
-      'Named after Ada Lovelace, this club focuses on programming, competitive coding, and collaborative projects. Weekly meetups cover algorithms, hackathon prep, and peer debugging. It is a friendly entry point if you want to level up beyond coursework.',
+      'Lovelace Society is the coding and robotics club of IISER Berhampur, dedicated to promoting programming, technology, and automation across disciplines. The club provides resources, workshops, and mentorship to help students develop skills in coding, robotics, and problem-solving. Its vision is to foster interest and passion for technology and highlight the importance of computational skills in diverse academic and real-world fields.',
   },
   {
     id: 'yavanika',
     name: 'Yavanika',
-    logo: 'https://picsum.photos/seed/club-yavanika/128/128',
+    logo: yavanikaLogo,
     info:
-      'Yavanika celebrates theatre, improv, and scripted performance in multiple languages. Auditions and backstage roles are announced each semester. Whether you prefer acting, direction, or set design, there is usually a role that fits your schedule.',
+    'Founded recently, Yavanika is a growing community dedicated to bringing the magic of theatre to IISER Berhampur. Despite being new, the club has already showcased its talent at major events like IICM and Kyrat. With passionate members focused on acting, storytelling, and stagecraft, Yavanika aims to build a vibrant drama culture on campus and provide a platform for students to collaborate and create impactful performances.'
   },
   {
-    id: 'debate',
-    name: 'Debate Society',
-    logo: 'https://picsum.photos/seed/club-debate/128/128',
+    id: 'verdad',
+    name: 'Verdad',
+    logo: verdadlogo,
     info:
-      'The Debate Society trains members in structured argument, parliamentary formats, and public speaking. Internal scrimmages help beginners build confidence before external tournaments. Coaches and seniors often host weekend argument clinics.',
+    'under construction club'
   },
   {
-    id: 'quizzing',
-    name: 'Quizzing Club',
-    logo: 'https://picsum.photos/seed/club-quiz/128/128',
+    id: 'qcell',
+    name: 'Qcell',
+    logo: qcelllogo,
     info:
-      'From pop culture to science trivia, the Quizzing Club hosts informal buzzer nights and serious quiz leagues. Teams form around shared interests, and travel to national quizzes is organized when enough members commit. Drop in for a low-pressure trial round.',
+    'Q Cell is the quiz club of IISER Berhampur, dedicated to promoting curiosity, critical thinking, and a culture of learning. The club organizes quizzes, trivia sessions, and knowledge-based events that span science, culture, and current affairs. By combining the excitement of competition with the joy of discovery, Q Cell aims to enhance general knowledge, encourage analytical thinking, and build a community where curiosity and lifelong learning thrive.'
   },
   {
-    id: 'astronomy',
-    name: 'Astronomy Club',
-    logo: 'https://picsum.photos/seed/club-astro/128/128',
+    id: 'naxatra',
+    name: 'Naxatra',
+    logo: naxatralogo,
     info:
-      'Astronomy Club schedules sky-gazing sessions, telescope maintenance workshops, and guest lectures on observational techniques. Weather-permitting outings are announced on short notice. Beginners learn constellations before moving to astrophotography projects.',
+      'Naxatra is the astronomy club of IISER Berhampur, run by enthusiastic amateur astronomers who aim to promote interest in astronomy and astrophysics. The club organizes student talks, creative science demonstrations, workshops, and telescope observation sessions to cultivate scientific curiosity. It also works to increase public understanding of astronomy and provide guidance and opportunities for those interested in exploring the field within and beyond the institute.',
   },
   {
-    id: 'eco',
-    name: 'Eco & Sustainability',
-    logo: 'https://picsum.photos/seed/club-eco/128/128',
+    id: 'oasis',
+    name: 'Oasis',
+    logo: oasislogo,
     info:
-      'This group coordinates campus clean-ups, waste audits, and awareness drives tied to local ecology. Projects often partner with hostel councils and the mess committee. If you care about practical sustainability, you can contribute research or on-ground volunteering.',
+    'Oasis is the eco club of IISER Berhampur, established in 2019 with the vision of promoting awareness and conservation of biodiversity and natural resources. Guided by faculty mentors, the club brings together students from diverse disciplines to work towards environmental sustainability. Through educational and engaging activities, Oasis strives to build a community that encourages appreciation, responsibility, and active efforts toward protecting nature.'
   },
   {
-    id: 'sports',
-    name: 'Sports Council',
-    logo: 'https://picsum.photos/seed/club-sports/128/128',
+    id: '137 inverse',
+    name: '137 Inverse',
+    logo: inverseLogo,
     info:
-      'Sports Council organizes intramurals, inter-IISER fixtures, and fitness initiatives across courts and fields. Captains for cricket, football, badminton, and athletics recruit through trials. Even casual players can join recreational leagues for consistency and fun.',
+      '137 Inverse is the official physics club of IISER Berhampur, dedicated to promoting curiosity and a deeper understanding of physics. The club organizes engaging activities such as lecture series, newsletters, science exhibitions, workshops, and outreach initiatives. Its vision is to build an active and accessible physics community where students passionate about exploring fundamental questions can learn, discuss, and grow together.',
   },
   {
-    id: 'volunteering',
-    name: 'Social Outreach',
-    logo: 'https://picsum.photos/seed/club-outreach/128/128',
+    id: 'angika',
+    name: 'angika',
+    logo: angikalogo,
+    info: 'A home for the dance enthusiasts. Angika has consistently delivered brilliant performances at various occasions of the institute. Members are always enthusiastic and energetic during cultural events, actively managing and participating. The club represented IISER Berhampur at IICM last year and aims to perform even better in the future. Bringing recognition to IISER BPR is the club’s constant goal. Kyrat 24 was also a great experience from the club’s perspective, and it plans to organize similar events in the future.',
+  },
+  {
+    id: 'iiec',
+    name: 'IIEC',
+    logo: iieclogo,
+    info:
+      'Chemshala is the chemistry club of IISER Berhampur, bringing together students passionate about chemical sciences and promoting scientific learning beyond the classroom. The club organizes lectures, interactive events, outreach activities, and initiatives such as Loquitur, Join the Dots, and ChemBuzz to make chemistry engaging and accessible. With a focus on education and community outreach, Chemshala aims to inspire curiosity and prepare its members to apply scientific knowledge to real-world challenges.',
+  },{
+    id: 'chemshala',
+    name: 'Chemshala',
+    logo: chemshalalogo,
+    info:
+          'Chemshala is the chemistry club of IISER Berhampur, bringing together students passionate about chemical sciences and promoting scientific learning beyond the classroom. The club organizes lectures, interactive events, outreach activities, and initiatives such as Loquitur, Join the Dots, and ChemBuzz to make chemistry engaging and accessible. With a focus on education and community outreach, Chemshala aims to inspire curiosity and prepare its members to apply scientific knowledge to real-world challenges.',
+  },{
+    id: 'episteme',
+    name: 'Episteme',
+    logo: epistemeLogo,
+    info:
+    'Episteme is the official student-run science magazine of IISER Berhampur, published biannually to showcase science communication and creativity. The magazine features articles written by students and faculty, aiming to promote scientific thinking, discussion, and awareness. With special lab features and research highlights, Episteme also provides insights into ongoing work at the institute and encourages a strong research and writing culture.'
+  },{
+    id: 'flagro',
+    name: 'Flagro',
+    logo: flagrologo,
+    info:
+    'Flagro, meaning ‘blaze’, is the art club of IISER Berhampur that brings together students passionate about creative expression. The club provides a platform for members to explore diverse art forms through competitions, workshops, and exhibitions. With a unique focus on connecting art and science, Flagro encourages creativity, experimentation, and appreciation for the harmony between these fields. Open to both experienced artists and beginners, the club fosters an inclusive environment that promotes artistic growth and cultural engagement within the institute.'
+  },{
+    id: 'fortress',
+    name: 'Fortress',
+    logo: fortresslogo,
     info:
       'Social Outreach connects students with nearby schools, literacy drives, and science outreach modules. Planning meetings set safe volunteering guidelines and transport. It is a structured way to apply classroom science to community impact on weekends.',
+  },{
+    id: 'jigyansa',
+    name: 'Jigyansa',
+    logo: jigyansalogo,
+    info:
+    'Jigyansa is the official science outreach club of IISER Berhampur, dedicated to spreading scientific awareness and curiosity among students and the wider community. The club conducts workshops, demonstrations, and interactive sessions in rural and semi-urban areas to make science engaging and accessible. Through podcasts and digital content, Jigyansa also extends its reach beyond physical boundaries, working to bridge the gap between scientific knowledge and public understanding.'
+  },{
+    id: 'lavida',
+    name: 'la vida',
+    logo: lavidalogo,
+    info:
+    'La Vida is the official biology club of IISER Berhampur, bringing together students passionate about exploring the diverse fields of biological sciences. The club provides a platform to nurture curiosity, share ideas and innovations, and engage in discussions and activities related to biology. Through events, interactions, and outreach, La Vida aims to promote scientific thinking and spread the essence of biological sciences to all interested students.',
+  },{
+    id: 'pojectspiral',
+    name: 'Project Spiral',
+    logo: projectspirallogo,
+    info:
+    'Oasis is the eco club of IISER Berhampur, established in 2019 with the vision of promoting awareness and conservation of biodiversity and natural resources. Guided by faculty mentors, the club brings together students from diverse disciplines to work towards environmental sustainability. Through educational and engaging activities, Oasis strives to build a community that encourages appreciation, responsibility, and active efforts toward protecting nature.'
+  },{
+    id: 'vasudha',
+    name: 'Vasudha',
+    logo: vasudhalogo,
+    info:
+    'Vasudha is the Earth and Environmental Club of IISER Berhampur, dedicated to promoting interest in geological and environmental sciences. The club aims to foster a deeper understanding of Earth’s processes and encourage a strong connection with nature. Through awareness programs, activities, and sustainability initiatives, Vasudha works towards building a community committed to environmental conservation and responsible coexistence with our planet.'
   },
+  
 ]

@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import freshersGuideLogo from '../assets/freshers-guide-logo.png'
 import { CLUBS } from '../data/clubsData'
 import '../App.css'
-import './ClubsPage.css'
+import   './ClubsPage.css'
 
 export default function ClubsPage() {
-  const [expandedId, setExpandedId] = useState(null)
+  const [selectedClub, setSelectedClub] = useState(null)
   const headingId = useId()
 
   useEffect(() => {
@@ -14,9 +14,7 @@ export default function ClubsPage() {
     localStorage.setItem('theme', 'dark')
   }, [])
 
-  function toggleClub(id) {
-    setExpandedId((current) => (current === id ? null : id))
-  }
+
 
   return (
     <div className="clubs-page">
@@ -41,44 +39,64 @@ export default function ClubsPage() {
 
         <ul className="clubs-grid" aria-labelledby={headingId}>
           {CLUBS.map((club) => {
-            const isOpen = expandedId === club.id
-            const panelId = `club-panel-${club.id}`
             return (
               <li key={club.id}>
                 <article className="club-card">
                   <div className="club-card-header">
-                    <img
-                      className="club-card-logo"
-                      src={club.logo}
-                      alt=""
-                      width={128}
-                      height={128}
-                      loading="lazy"
-                    />
+                    <div className="club-logo-wrapper">
+                      <img
+                        className="club-card-logo"
+                        src={club.logo}
+                        alt={club.name}
+                      />
+                    </div>
                     <div className="club-card-title-block">
                       <h2 className="club-card-name">{club.name}</h2>
                       <button
                         type="button"
                         className="primary-button club-card-toggle"
-                        onClick={() => toggleClub(club.id)}
-                        aria-expanded={isOpen}
-                        aria-controls={panelId}
+                        onClick={() => setSelectedClub(club)}
                       >
-                        {isOpen ? 'Hide details' : 'About this club'}
+                        About this club
                       </button>
                     </div>
                   </div>
-                  {isOpen ? (
-                    <div className="club-card-panel" id={panelId} role="region">
-                      <p className="club-card-info">{club.info}</p>
-                    </div>
-                  ) : null}
                 </article>
               </li>
             )
           })}
         </ul>
       </main>
+      {selectedClub && (
+  <div
+    className="club-modal-overlay"
+    onClick={() => setSelectedClub(null)}
+  >
+    <div
+      className="club-modal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="club-modal-logo-wrapper">
+        <img
+          src={selectedClub.logo}
+          alt={selectedClub.name}
+          className="club-modal-logo"
+        />
+      </div>
+
+      <h2>{selectedClub.name}</h2>
+
+      <p>{selectedClub.info}</p>
+
+      <button
+        className="primary-button"
+        onClick={() => setSelectedClub(null)}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </div>
   )
 }

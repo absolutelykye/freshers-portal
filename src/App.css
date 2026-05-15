@@ -21,6 +21,7 @@ main {
   background: var(--page-bg);
   backdrop-filter: blur(12px);
   padding: 4px clamp(12px, 2vw, 24px);
+  padding-top: max(4px, env(safe-area-inset-top, 0px));
   transition:
     opacity 0.28s ease,
     transform 0.28s ease,
@@ -72,6 +73,8 @@ main {
   justify-content: flex-end;
   overflow-x: auto;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
 }
 
 .nav-links::-webkit-scrollbar {
@@ -233,10 +236,10 @@ main {
   padding-bottom: 144px;
 }
 .hero-glass {
-  background: rgba(15, 23, 42, 0.45);
+  background:rgba(15, 23, 42, 0.72);
 
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
 
   border: 1px solid rgba(255,255,255,0.08);
 
@@ -614,12 +617,161 @@ main {
 
 .quick-panel,
 .event-card,
-.contact-section {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
+.contact-header {
+  text-align: center;
+
+  margin-bottom: 3rem;
+}
+.contact-header h2 {
+  margin-top: 0.6rem;
+
+  font-size: clamp(2rem, 4vw, 3.2rem);
 }
 
+.contact-subtext {
+  max-width: 700px;
+
+  margin: 1rem auto 0;
+
+  color: rgba(255,255,255,0.72);
+
+  line-height: 1.7;
+
+  font-size: 1.05rem;
+}
+
+.senior-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 2rem;
+
+  margin-top: 3rem;
+}
+
+.senior-card {
+  background: rgba(15, 23, 42, 0.45);
+
+  backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  border-radius: 24px;
+
+  padding: 2rem 1.5rem;
+
+  text-align: center;
+
+  width: 100%;
+
+  min-width: 0;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+
+@media (max-width: 1000px) {
+  .senior-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .senior-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.senior-card:hover {
+  transform: translateY(-6px);
+
+  border-color: rgba(96,165,250,0.4);
+
+  box-shadow:
+    0 0 30px rgba(59,130,246,0.15);
+}
+
+.senior-image {
+  width: 110px;
+
+  height: 110px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  margin-bottom: 1rem;
+
+  border: 3px solid rgba(255,255,255,0.08);
+}
+
+.senior-card h3 {
+  margin-bottom: 0.4rem;
+
+  font-size: 1.35rem;
+}
+
+.senior-role {
+  color: rgba(255,255,255,0.65);
+
+  margin-bottom: 1.5rem;
+}
+
+.contact-dropdown summary {
+  list-style: none;
+  margin-top: 1.4rem;
+
+  padding: 0.9rem 1.8rem;
+
+  font-size: 1rem;
+  cursor: pointer;
+
+  display: inline-block;
+
+  padding: 0.9rem 1.4rem;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #60a5fa
+    );
+
+  color: white;
+
+  font-weight: 600;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.contact-dropdown summary:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 25px rgba(59,130,246,0.45);
+}
+
+.contact-info {
+  margin-top: 1rem;
+
+  line-height: 1.7;
+
+  color: rgba(255,255,255,0.82);
+}
 .quick-panel {
   padding: 24px;
 }
@@ -669,6 +821,18 @@ main {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+}
+
+.starter-grid-cell {
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.starter-grid-cell > a {
+  flex: 1;
+  height: 100%;
 }
 
 .starter-card-link {
@@ -796,9 +960,10 @@ main {
 
 .contact-section {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 22px;
   margin: 44px 0;
   padding: 28px;
 }
@@ -808,14 +973,11 @@ main {
     width: min(100% - 24px, 1120px);
   }
 
-  .contact-section {
-    align-items: center;
-    flex-direction: column;
-  }
 
   .navbar {
     min-height: 48px;
     padding: 4px 8px;
+    padding-top: max(4px, env(safe-area-inset-top, 0px));
   }
 
   .brand {
@@ -888,6 +1050,20 @@ main {
   .contact-section .primary-button {
     width: 100%;
     max-width: 100%;
+  }
+
+  .footer {
+    padding: 3rem 1.25rem 1.5rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  .footer-bottom {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
   }
 }
 
