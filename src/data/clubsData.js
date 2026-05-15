@@ -54,7 +54,7 @@ export const CLUBS = [
     name: 'Verdad',
     logo: verdadlogo,
     info:
-    'under construction club'
+    "Verdad is a proposed Philosophy Club at IISER Berhampur designed to complement the institute's scientific environment by integrating philosophical inquiry with science and society. Under the oversight of Science and Career Development Sub-Council, the club aims to foster critical reasoning, open-minded discussion, and holistic student growth. Its planned activities span a rich variety of interactive mediums, including reading circles, debates, monthly newsletters, and performative philosophical drama."
   },
   {
     id: 'qcell',
