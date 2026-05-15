@@ -249,7 +249,7 @@ export default function Home() {
 
     <div className="senior-card">
       <img
-        src="/seniors/senior1.jpg"
+        src="/seniors/senior1.webp"
         alt="Senior"
         className="senior-image"
       />
