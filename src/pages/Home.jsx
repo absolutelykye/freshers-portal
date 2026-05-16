@@ -225,8 +225,7 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
                 <span></span>
                 <h3>Find your seniors</h3>
                 <p>
-                  Attend orientation, club introductions, and department meetups to meet classmates
-                  and seniors.
+                  Get in touch with seniors if you need any help. Got any doubts? - ask away! 
                 </p>
               </a>
             </StaggerItem>
@@ -633,6 +632,126 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
 </a>
         </div>
     </div>
+    <div className="senior-card">
+      <img
+        src="/seniors/senior8.webp"
+        alt="Senior"
+        className="senior-image"
+      />
+
+      <h3>Kanshika Khatri</h3>
+
+      <p className="senior-role">
+        2nd Year
+      </p>
+
+      <button
+          className="primary-button view-contact-btn"
+          onClick={(e) => {
+            e.currentTarget.closest('.senior-card').classList.toggle('show-contact');
+          }}
+        >
+          View Contact
+        </button>
+
+        <div className="contact-overlay">
+          <button
+            className="contact-overlay-close"
+            onClick={(e) => {
+              e.currentTarget.closest('.senior-card').classList.remove('show-contact');
+            }}
+          >
+            ✕
+          </button>
+          
+          <a href="https://wa.me/919796261024" target="_blank" rel="noopener noreferrer" className='contact-icon whatsapp'>
+  <FaWhatsapp />
+</a>
+          <a href="https://instagram.com/venomous_rose16" target="_blank" rel="noopener noreferrer" className='contact-icon insta'>
+  <FaInstagram />
+</a>
+        </div>
+    </div>
+
+    <div className="senior-card">
+      <img
+        src="/seniors/senior9.webp"
+        alt="Senior"
+        className="senior-image"
+      />
+
+      <h3>Harshita Sharma</h3>
+
+      <p className="senior-role">
+        2nd Year
+      </p>
+
+      <button
+          className="primary-button view-contact-btn"
+          onClick={(e) => {
+            e.currentTarget.closest('.senior-card').classList.toggle('show-contact');
+          }}
+        >
+          View Contact
+        </button>
+
+        <div className="contact-overlay">
+          <button
+            className="contact-overlay-close"
+            onClick={(e) => {
+              e.currentTarget.closest('.senior-card').classList.remove('show-contact');
+            }}
+          >
+            ✕
+          </button>
+          
+
+          <a href="https://instagram.com/hrshita.a" target="_blank" rel="noopener noreferrer" className='contact-icon insta'>
+  <FaInstagram />
+</a>
+        </div>
+    </div>
+  
+      <div className="senior-card">
+      <img
+        src="/seniors/senior10.webp"
+        alt="Senior"
+        className="senior-image"
+      />
+
+      <h3>Reeddhi Kundu</h3>
+
+      <p className="senior-role">
+        2nd Year
+      </p>
+
+      <button
+          className="primary-button view-contact-btn"
+          onClick={(e) => {
+            e.currentTarget.closest('.senior-card').classList.toggle('show-contact');
+          }}
+        >
+          View Contact
+        </button>
+
+        <div className="contact-overlay">
+          <button
+            className="contact-overlay-close"
+            onClick={(e) => {
+              e.currentTarget.closest('.senior-card').classList.remove('show-contact');
+            }}
+          >
+            ✕
+          </button>
+          
+
+          <a href="https://instagram.com/reeddhiiser" target="_blank" rel="noopener noreferrer" className='contact-icon insta'>
+  <FaInstagram />
+</a>
+        </div>
+    </div>
+
+
 
   </div>
 </ScrollReveal>
