@@ -189,28 +189,35 @@
   position: fixed;
   inset: 0;
 
-  background: rgba(0,0,0,0.65);
-
-  backdrop-filter: blur(12px);
-
+  background: rgba(0,0,0,0.72);
   display: flex;
   align-items: center;
   justify-content: center;
 
-  z-index: 999;
+  backdrop-filter: blur(12px);
+
+  padding: 1rem;
+
+
+  z-index: 1000;
 }
 
 .club-modal {
-  width: min(620px, 92vw);
+  width: min(92vw, 520vw);
+  max-height: 85vh;
+  overflow-y: auto;
 
   background: rgba(15,23,42,0.96);
-
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255,255,255,0.08);
 
-  border-radius: 28px;
+  border-radius: 24px;
 
-  padding: 2.5rem;
-
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   text-align: center;
 }
 
@@ -238,4 +245,46 @@
   line-height: 1.8;
 
   margin: 1.5rem 0 2rem;
+}
+
+
+@media (max-width: 640px) {
+  .club-modal {
+    width: 94vw;
+    max-height: 82vh;
+
+    padding: 1.1rem;
+
+    border-radius: 18px;
+  }
+
+  .club-modal h2 {
+    font-size: 1.6rem;
+    line-height: 1.2;
+  }
+
+  .club-modal p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .club-modal-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+  }
+
+  .club-modal button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+.club-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.club-modal::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.18);
+  border-radius: 999px;
 }
