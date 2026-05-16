@@ -751,7 +751,44 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
         </div>
     </div>
 
+      <div className="senior-card">
+      <img
+        src="/seniors/senior11.webp"
+        alt="Senior"
+        className="senior-image"
+      />
 
+      <h3>Shreya Singh</h3>
+
+      <p className="senior-role">
+        2nd Year
+      </p>
+
+      <button
+          className="primary-button view-contact-btn"
+          onClick={(e) => {
+            e.currentTarget.closest('.senior-card').classList.toggle('show-contact');
+          }}
+        >
+          View Contact
+        </button>
+
+        <div className="contact-overlay">
+          <button
+            className="contact-overlay-close"
+            onClick={(e) => {
+              e.currentTarget.closest('.senior-card').classList.remove('show-contact');
+            }}
+          >
+            ✕
+          </button>
+          
+
+          <a href="https://wa.me/916306047764" target="_blank" rel="noopener noreferrer" className='contact-icon whatsapp'>
+  <FaWhatsapp />
+</a>
+        </div>
+    </div>
 
   </div>
 </ScrollReveal>
