@@ -324,7 +324,7 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
 
     <div className="faq-footer">
       <p>Still have questions?</p>
-      <a href="#contact" className="primary-button faq-cta" target="_blank" rel="noopener noreferrer">
+      <a href="#contact" className="primary-button faq-cta">
         Ask the seniors!
       </a>
     </div>
@@ -587,7 +587,7 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
     >
       ✕
     </button>
-    <a href="https://instagram.com/vedantbhajipale6" target="_blank" rel="noopener noreferrer" className='contact-icon insta'>
+    <a href="https://instagram.com/vedantabhajipale6" target="_blank" rel="noopener noreferrer" className='contact-icon insta'>
       <FaInstagram />
     </a>
               <a href="https://wa.me/8623041968" target="_blank" rel="noopener noreferrer" className='contact-icon whatsapp'>
