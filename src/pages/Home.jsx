@@ -38,7 +38,7 @@ const faqs = [
   { id: 4, question: "Does having a large security presence feel restrictive or intrusive?", answer: "Not at all. The security model is designed to protect, not to restrict. The personnel are trained to maintain a secure environment while ensuring they never intrude on your personal privacy. Furthermore, the guards are highly supportive and approachable; if you ever find yourself needing assistance with directions, late-night safety, or any unexpected issue on campus, they are always ready to help.", tag: "Security" },
   { id: 5, question: "Are there any specific rules regarding late-night gatherings around the campus or hostels?", answer: "To maintain a peaceful academic atmosphere and ensure everyone gets adequate rest, public gatherings outside the hostels are not allowed after 2:00 AM. This policy applies equally to both the boys' and girls' hostels. It helps keep the campus secure and quiet during the late hours, ensuring that students who are resting or studying are not disturbed.", tag: "Security" },
   { id: 6, question: "What is the deadline for leaving or entering the campus in the evening?", answer: "For safety and security reasons, students are not permitted to leave the campus after 8:00 PM. The campus gates are monitored to ensure a secure environment overnight. If a situation arises where you absolutely must leave past this time, you just need to inform the hostel warden in advance to secure the necessary permissions.", tag: "Security" },
-  { id: 7, question: " What's so special about the campus location of IISER Berhampur?", answer: "wo words: the beach. IISER Berhampur holds one of the most spectacular locations across all IISERs. Imagine wrapping up an intense lab session or a challenging exam and heading straight to the coast to unwind. The proximity to the beach gives you an unparalleled campus lifestyle where spontaneous weekend getaways, pristine sunsets, and incredible seaside fun with friends are not uncommon. It is a completely unique perk that transforms the student experience into something outstanding, offering the perfect scenic backdrop to balance your academic journey.", tag: "Campus Life" },
+  { id: 7, question: " What's so special about the campus location of IISER Berhampur?", answer: "Two words: the beach. IISER Berhampur holds one of the most spectacular locations across all IISERs. Imagine wrapping up an intense lab session or a challenging exam and heading straight to the coast to unwind. The proximity to the beach gives you an unparalleled campus lifestyle where spontaneous weekend getaways, pristine sunsets, and incredible seaside fun with friends are not uncommon. It is a completely unique perk that transforms the student experience into something outstanding, offering the perfect scenic backdrop to balance your academic journey.", tag: "Campus Life" },
   { id: 8, question: "How does online delivery and shopping work on the campus?", answer: "You will find that your essential shopping needs are mostly taken care of. Amazon and Flipkart operate seamlessly here, delivering everything from textbooks to personal electronics right to the hostel entrance without a hitch. While instant 10-minute grocery or food apps like Zomato, Swiggy, and Blinkit do not serve our specific coastal ecosystem yet, it is a surprisingly manageable chore nevertheless. This shift away from commercial food delivery is compensated by fantastic community culture where students bond over night canteens, hostel mess meals, the bakery called One Stop and our beloved restaurant, the Hungry House.", tag: "Campus Life" },
   { id: 9, question: "Is the campus connected to the main city, and how do students travel back and forth?", answer: "The campus is located roughly 20-22 kilometres away from the main city, positioned perfectly to offer a serene, distraction-free environment ideal for deep learning and research. Connectivity is straightforward and budget-friendly thanks to reliable institute vehicles and government buses that run back and forth on fixed, convenient schedules. These scheduled rides take care of travelling into the city for shopping or entertainment. A quick pro-tip for your journey: while local auto-rickshaws are always available for urgent trips, they generally charge around 400 to 600 rupees for a one-way ride, so smart students usually prefer the scheduled buses or pool an auto with a group of friends to share the cost.", tag: "Campus Life" },
   { id: 10, question: "Is the academic pressure at an IISER so intense that it leaves no time for personal life?", answer: "Not at all. While the curriculum is rigorous, it is designed to be manageable. Once your scheduled classes and labs wrap up, and you're back to your hostels, usually around 6 PM, your time is largely your own. Students actively balance their studies with a variety of personal interests, whether that means hitting the gym, playing competitive sports, jamming with a band, or simply hanging out with friends. Success here is about effective time management, not sacrificing your social life.", tag: "Campus Life" },
@@ -56,7 +56,7 @@ const faqs = [
   { id: 20, question: "Is an IISER degree only useful if I want to pursue a PhD and enter academia?", answer: "While IISERs are widely considered the premier stepping stone for a PhD in India or abroad, that is not your only option. The rigorous training you receive builds strong analytical, problem-solving, and data skills. Graduates have successfully transitioned into corporate careers in finance, enrolled in MBA programs, entered the private sector, taken up government roles (including joining the defense forces like the Navy and Air Force), or even launched their own startups.", tag: "Careers" },
   { id: 21, question: "Can I expect a guaranteed campus placement right after my BS-MS graduation?", answer: "No, you should not join an IISER with the expectation of a guaranteed corporate placement like you might see at traditional engineering colleges. Direct campus placements right after graduation are less common because the institutional framework is built to foster research. If your primary and immediate goal after five years is a corporate job through a campus placement cell, an IISER might not be the right fit for you.", tag: "Careers" },
   { id: 22, question: "If campus placements are limited, how do students transition into non-research jobs?", answer: "Because direct placements are not the primary focus, students looking for non-academic routes take a more proactive approach. They leverage the deep analytical, computational, and statistical skills gained during their degree to apply for off-campus roles, secure corporate internships, or prepare for competitive examinations like the civil services. The degree carries significant prestige, but the onus of securing corporate roles often relies on your individual effort and networking.", tag: "Careers" },
-  { id: 23, question: "How well does an IISER degree prepare me for international opportunities?", answer: "How well does an IISER degree prepare me for international opportunities?", tag: "Careers" },
+  { id: 23, question: "How well does an IISER degree prepare me for international opportunities?", answer: "Exceptionally well. If your goal is to pursue a PhD or research position abroad, an IISER degree is highly respected globally. The hands-on laboratory experience, mandatory year-long master's thesis, and opportunities to publish papers mean that IISER graduates are highly competitive applicants for top-tier international universities and research institutions.", tag: "Careers" },
   
 ];
 
@@ -182,7 +182,7 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
               <span className="hero-title-berhampur">Berhampur</span>
             </h1>
             <p className="hero-text">
-              A simple guide for freshers to find events, useful resources,
+              A simple guide for freshers and aspirants to find useful resources,
               campus contacts, and everything they usually ask seniors in the
               first few weeks.
             </p>
@@ -207,7 +207,7 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
         <ScrollReveal className="section start-section" id="start-here">
           <div className="section-heading">
             <p className="eyebrow">Begin here</p>
-            <h2>Freshers starter kit</h2>
+            <h2>Freshers and Aspirants starter kit</h2>
           </div>
           <StaggerGrid className="starter-grid">
             <StaggerItem className="starter-grid-cell">
@@ -603,7 +603,7 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
         className="senior-image"
       />
 
-      <h3>Satya</h3>
+      <h3>Sathya Narayanan V</h3>
 
       <p className="senior-role">
         2nd Year
@@ -642,7 +642,7 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
       <ScrollReveal className="footer" element="footer">
         <div className="footer-grid">
           <div className="footer-brand">
-            <h2>Freshers&apos; Guide</h2>
+            <h2>Freshers and Aspirants&apos; Guide</h2>
             <p>A 2025 batch driven platform.</p>
           </div>
 
