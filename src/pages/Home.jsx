@@ -174,7 +174,7 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
               delay: reduceMotion ? 0 : 0.06,
             }}
           >
-            <p className="eyebrow">For first-year students</p>
+            <p className="eyebrow">For freshers and aspirants students</p>
             <h1>
               <span className="hero-title-line">
                 Welcome to <span className="hero-title-iiser">IISER</span>
@@ -668,7 +668,7 @@ const toggle = (id) => setOpenId(openId === id ? null : id);
               rel="noreferrer"
               className="footer-credit-link"
             >
-              Vedant
+              Vedant Pardhi
             </a>
             <span className="footer-dot">•</span>
             <a
