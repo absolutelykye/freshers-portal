@@ -13,7 +13,9 @@ export default function ClubsPage() {
     document.documentElement.setAttribute('data-theme', 'dark')
     localStorage.setItem('theme', 'dark')
   }, [])
-
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, []);
 
 
   return (
