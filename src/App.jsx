@@ -7,12 +7,15 @@ import { Analytics } from "@vercel/analytics/react"
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/gallery" element={<GalleryPage />} />
-      <Route path="/clubs" element={<ClubsPage />} />
-      <Route path="/faqs" element={<FAQPage />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/clubs" element={<ClubsPage />} />
+        <Route path="/faqs" element={<FAQPage />} />
+      </Routes>
+      <Analytics />
+    </>
   )
 }
 
