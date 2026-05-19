@@ -134,7 +134,7 @@ export default function Home() {
               delay: reduceMotion ? 0 : 0.06,
             }}
           >
-            <p className="eyebrow">For freshers and aspirants</p>
+            <p className="eyebrow">For freshers and aspirants who want to know more IISER Berhampur</p>
             <h1>
               <span className="hero-title-line">
                 Welcome to <span className="hero-title-iiser">IISER</span>
@@ -167,7 +167,7 @@ export default function Home() {
         <ScrollReveal className="section start-section" id="start-here">
           <div className="section-heading">
             <p className="eyebrow">Begin here</p>
-            <h2>Freshers and Aspirants starter kit</h2>
+            <h2>Starter kit</h2>
           </div>
           <StaggerGrid className="starter-grid">
             <StaggerItem className="starter-grid-cell">
@@ -176,7 +176,7 @@ export default function Home() {
                 <h3>College life and Clubs</h3>
                 <p>
                   Take a look at all of the clubs that student body offers to make your college life
-                  more enjoyable.
+                  more enjoyable at IISER Berhampur.
                 </p>
               </Link>
             </StaggerItem>
@@ -194,7 +194,7 @@ export default function Home() {
                 <span></span>
                 <h3>Gallery</h3>
                 <p>
-                  Find hostels, lecture halls, canteens, labs, and other important campus locations
+                  Find hostels, lecture halls, canteens, labs, and other important campus locations in IISER Berhampur
                   to navigate your first weeks with ease.
                 </p>
               </Link>
@@ -205,7 +205,7 @@ export default function Home() {
                 <span></span>
                 <h3>FAQs</h3>
                 <p>
-                  Frequently asked questions.
+                  Frequently asked questions about IISER BPR.
                 </p>
               </Link>
             </StaggerItem>

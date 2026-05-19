@@ -3,7 +3,7 @@ import Home from './pages/Home.jsx'
 import GalleryPage from './pages/GalleryPage.jsx'
 import ClubsPage from './pages/ClubsPage.jsx'
 import FAQPage from './pages/FAQpage';
-
+import { Analytics } from "@vercel/analytics/react"
 
 export default function App() {
   return (
