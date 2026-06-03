@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import campusHero from '../assets/campus-hero.jpeg'
 import freshersGuideLogo from '../assets/freshers-guide-logo.png'
-import { FaInstagram, FaLinkedin, FaTelegram, FaWhatsapp } from 'react-icons/fa'
+import { FaInstagram, FaLinkedin, FaTelegram, FaWhatsapp, FaGlobe} from 'react-icons/fa'
 import { ScrollReveal, StaggerGrid, StaggerItem } from '../components/ScrollReveal.jsx'
 import '../App.css'
 import GlowCursor from './GlowCursor'
@@ -730,12 +730,23 @@ export default function Home() {
           <div className="footer-credit">
             <span>Made by</span>
             <a
-              href="https://linkedin.com/in/vedantpardhi"
+              href="https://vedantpardhi.vercel.app"
               target="_blank"
               rel="noreferrer"
               className="footer-credit-link"
             >
-              Vedant Pardhi
+              Vedant Pardhi 
+            </a>
+            <span className="footer-dot">•</span>
+
+            <a
+              href="https://vedantpardhi.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+              className="footer-icon"
+              aria-label="LinkedIn"
+            >
+              <FaGlobe />
             </a>
             <span className="footer-dot">•</span>
             <a
