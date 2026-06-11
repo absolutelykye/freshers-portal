@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import freshersGuideLogo from '../assets/freshers-guide-logo.png'
 import { GALLERY_LOCATIONS, getGalleryLocation } from '../data/galleryData'
@@ -7,6 +7,9 @@ import './GalleryPage.css'
 
 export default function GalleryPage() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [lightboxIndex, setLightboxIndex] = useState(null)
+  const touchStartXRef = useRef(0)
+  const touchEndXRef = useRef(0)
   const locSlug = searchParams.get('loc') ?? ''
 
   useEffect(() => {
@@ -16,6 +19,41 @@ export default function GalleryPage() {
 
   const active = useMemo(() => getGalleryLocation(locSlug), [locSlug])
   const unknownSlug = Boolean(locSlug) && !active
+  const activeImage = active && lightboxIndex !== null ? active.images[lightboxIndex] : null
+
+  useEffect(() => {
+    setLightboxIndex(null)
+  }, [locSlug])
+
+  useEffect(() => {
+    if (!active || lightboxIndex === null) return undefined
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setLightboxIndex(null)
+      } else if (event.key === 'ArrowRight') {
+        setLightboxIndex((current) =>
+          current === null ? current : (current + 1) % active.images.length,
+        )
+      } else if (event.key === 'ArrowLeft') {
+        setLightboxIndex((current) =>
+          current === null
+            ? current
+            : (current - 1 + active.images.length) % active.images.length,
+        )
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [active, lightboxIndex])
 
   function selectLocation(slug) {
     setSearchParams({ loc: slug })
@@ -23,6 +61,45 @@ export default function GalleryPage() {
 
   function clearLocation() {
     setSearchParams({})
+  }
+
+  function openLightbox(index) {
+    setLightboxIndex(index)
+  }
+
+  function closeLightbox() {
+    setLightboxIndex(null)
+  }
+
+  function showNextImage() {
+    if (!active) return
+    setLightboxIndex((current) =>
+      current === null ? current : (current + 1) % active.images.length,
+    )
+  }
+
+  function showPreviousImage() {
+    if (!active) return
+    setLightboxIndex((current) =>
+      current === null ? current : (current - 1 + active.images.length) % active.images.length,
+    )
+  }
+
+  function handleLightboxTouchStart(event) {
+    touchStartXRef.current = event.changedTouches[0].clientX
+  }
+
+  function handleLightboxTouchEnd(event) {
+    touchEndXRef.current = event.changedTouches[0].clientX
+    const delta = touchEndXRef.current - touchStartXRef.current
+
+    if (Math.abs(delta) < 48) return
+
+    if (delta < 0) {
+      showNextImage()
+    } else {
+      showPreviousImage()
+    }
   }
 
   return (
@@ -78,18 +155,98 @@ export default function GalleryPage() {
               </button>
               <h2 className="gallery-active-title">{active.title}</h2>
             </div>
-            <ul className="gallery-image-grid">
-              {active.images.map((img) => (
-                <li key={img.src}>
-                  <figure className="gallery-image-card">
-                    <img src={img.src} alt={img.alt} loading="lazy" width={960} height={720} />
-                  </figure>
-                </li>
-              ))}
-            </ul>
+            {active.images.length === 0 ? (
+              <div className="gallery-unknown">
+                <p>No images available for this location yet.</p>
+              </div>
+            ) : (
+              <ul className="gallery-image-grid">
+                {active.images.map((img, index) => (
+                  <li key={img.src}>
+                    <button
+                      type="button"
+                      className="gallery-image-button"
+                      onClick={() => openLightbox(index)}
+                      aria-label={`Open image ${index + 1} of ${active.images.length}`}
+                    >
+                      <figure className="gallery-image-card">
+                        <img
+                          src={img.src}
+                          alt={img.alt}
+                          loading="lazy"
+                          decoding="async"
+                          width={960}
+                          height={720}
+                        />
+                        <figcaption className="gallery-image-meta">
+                          <span>{active.title}</span>
+                          <span>{index + 1} / {active.images.length}</span>
+                        </figcaption>
+                      </figure>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </>
         )}
       </main>
+
+      {activeImage ? (
+        <div
+          className="gallery-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${active.title} image viewer`}
+          onClick={closeLightbox}
+        >
+          <div
+            className="gallery-lightbox-panel"
+            onClick={(event) => event.stopPropagation()}
+            onTouchStart={handleLightboxTouchStart}
+            onTouchEnd={handleLightboxTouchEnd}
+          >
+            <button
+              type="button"
+              className="gallery-lightbox-close"
+              onClick={closeLightbox}
+              aria-label="Close image viewer"
+            >
+              Close
+            </button>
+
+            <button
+              type="button"
+              className="gallery-lightbox-arrow gallery-lightbox-arrow-left"
+              onClick={showPreviousImage}
+              aria-label="Previous image"
+            >
+              ‹
+            </button>
+
+            <figure className="gallery-lightbox-figure">
+              <img
+                src={activeImage.src}
+                alt={activeImage.alt}
+                className="gallery-lightbox-image"
+              />
+              <figcaption className="gallery-lightbox-caption">
+                <span>{activeImage.alt}</span>
+                <span>{lightboxIndex + 1} / {active.images.length}</span>
+              </figcaption>
+            </figure>
+
+            <button
+              type="button"
+              className="gallery-lightbox-arrow gallery-lightbox-arrow-right"
+              onClick={showNextImage}
+              aria-label="Next image"
+            >
+              ›
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }
