@@ -95,7 +95,7 @@ export const CLUBS = [
     name: 'IIEC',
     logo: iieclogo,
     info:
-      'Chemshala is the chemistry club of IISER Berhampur, bringing together students passionate about chemical sciences and promoting scientific learning beyond the classroom. The club organizes lectures, interactive events, outreach activities, and initiatives such as Loquitur, Join the Dots, and ChemBuzz to make chemistry engaging and accessible. With a focus on education and community outreach, Chemshala aims to inspire curiosity and prepare its members to apply scientific knowledge to real-world challenges.',
+      ' IIEC is the Innovation and Entrepreneurship Cell of IISER Berhampur, dedicated to promoting creativity, innovation, and entrepreneurial thinking among students. The club organizes collaborative activities, workshops, and events with other clubs and organizations to encourage problem-solving and idea development. Its primary goal is to nurture a culture of innovation and help students explore pathways to turn their ideas into impactful solutions. ',
   },{
     id: 'chemshala',
     name: 'Chemshala',
@@ -119,7 +119,7 @@ export const CLUBS = [
     name: 'Fortress',
     logo: fortresslogo,
     info:
-      'Social Outreach connects students with nearby schools, literacy drives, and science outreach modules. Planning meetings set safe volunteering guidelines and transport. It is a structured way to apply classroom science to community impact on weekends.',
+      ' The Fortress is the chess club of IISER Berhampur, bringing together players who enjoy strategy, competition, and the intellectual challenge of the game. Open to players of all skill levels, the club organizes practice sessions and tournaments that focus on learning, improvement, and having fun. Whether you are a beginner or an experienced player, the club offers a welcoming space to play, compete, and engage with fellow chess enthusiasts. ',
   },{
     id: 'jigyansa',
     name: 'Jigyansa',
