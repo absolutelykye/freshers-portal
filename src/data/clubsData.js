@@ -136,9 +136,8 @@ export const CLUBS = [
     id: 'pojectspiral',
     name: 'Project Spiral',
     logo: projectspirallogo,
-    info:
-    'Oasis is the eco club of IISER Berhampur, established in 2019 with the vision of promoting awareness and conservation of biodiversity and natural resources. Guided by faculty mentors, the club brings together students from diverse disciplines to work towards environmental sustainability. Through educational and engaging activities, Oasis strives to build a community that encourages appreciation, responsibility, and active efforts toward protecting nature.'
-  },{
+    info: 'Project Spiral is the mathematics club of IISER Berhampur, bringing together students who are passionate about exploring the beauty and applications of mathematics. The club organizes engaging activities, competitions, and guest lectures to encourage mathematical thinking and curiosity. By highlighting real-world applications and interdisciplinary connections, Project Spiral aims to make mathematics insightful, interactive, and inspiring. ',
+    },{
     id: 'vasudha',
     name: 'Vasudha',
     logo: vasudhalogo,
