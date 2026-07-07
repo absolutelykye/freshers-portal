@@ -103,23 +103,25 @@ export default function GalleryPage() {
   }
 
   return (
-    <div className="gallery-page">
-      <header className="gallery-page-header">
-        <Link className="gallery-page-brand" to="/" aria-label="Freshers Guide home">
-          <img src={freshersGuideLogo} alt="" width={120} height={40} />
+    <div className="subpage-shell gallery-page">
+      <header className="subpage-header">
+        <Link className="subpage-brand" to="/" aria-label="Freshers Guide home">
+          <img src={freshersGuideLogo} alt="" width={136} height={52} />
         </Link>
-        <nav className="gallery-page-nav" aria-label="Gallery navigation">
+        <nav className="subpage-nav" aria-label="Gallery navigation">
           <Link to="/">Home</Link>
-          
+          <Link to="/clubs">Clubs</Link>
+          <Link to="/faqs">FAQs</Link>
         </nav>
       </header>
 
-      <main className="gallery-page-main">
-        <div className="gallery-page-intro">
-          <p className="eyebrow">Campus life</p>
+      <main className="subpage-main gallery-page-main">
+        <div className="section-heading gallery-page-intro">
+          <p className="eyebrow">Campus Life</p>
           <h1>Gallery</h1>
           <p className="gallery-page-lead">
-  
+            Think of this as the visual map. Open a place, inspect it properly, and swipe through it
+            on your phone without the grid fighting back.
           </p>
         </div>
 
@@ -141,7 +143,8 @@ export default function GalleryPage() {
                     className="gallery-location-option"
                     onClick={() => selectLocation(location.slug)}
                   >
-                    {location.title}
+                    <span>{location.title}</span>
+                    <small>{location.images.length} photos</small>
                   </button>
                 </li>
               ))}

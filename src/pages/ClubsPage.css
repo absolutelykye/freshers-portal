@@ -1,133 +1,60 @@
-.clubs-page {
-  min-height: 100dvh;
-  background: var(--page-bg);
-  color: var(--text);
-}
-
-.clubs-page-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding: 12px clamp(16px, 3vw, 32px);
-  border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--page-bg) 88%, transparent);
-  backdrop-filter: blur(12px);
-}
-
-.clubs-page-brand img {
-  height: 32px;
-  width: auto;
-  display: block;
-}
-
-.clubs-page-nav {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.clubs-page-nav a {
-  font-weight: 750;
-  font-size: 0.9rem;
-  color: var(--text);
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-}
-
-.clubs-page-nav a:hover {
-  color: var(--primary);
-  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-}
-
-.clubs-page-main {
-  width: min(1120px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 36px 0 64px;
+.clubs-page-intro .eyebrow {
+  color: var(--cyan);
 }
 
 .clubs-page-intro h1 {
-  margin: 8px 0 12px;
-  color: var(--text-strong);
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  color: var(--paper);
 }
 
 .clubs-page-lead {
-  margin: 0;
-  max-width: 70ch;
-  color: var(--text-muted);
-  line-height: 1.55;
-}
-
-.clubs-page-code {
-  font-size: 0.85em;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
+  max-width: 64ch;
 }
 
 .clubs-grid {
   list-style: none;
+  margin: 34px 0 0;
   padding: 0;
-  margin: 48px 0 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 .club-card {
-  position: relative;
-  margin: 0;
-  padding: 32px 24px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: color-mix(in srgb, var(--surface) 60%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 24px;
+  align-items: flex-start;
+  padding: 26px;
+  text-align: left;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: center;
-  height: 100%;
+  transition:
+    transform 0.24s ease,
+    border-color 0.24s ease,
+    box-shadow 0.24s ease;
 }
 
-.club-card:hover, .club-card:focus-visible {
-  transform: translateY(-8px);
-  border-color: color-mix(in srgb, var(--primary) 50%, transparent);
-  background: color-mix(in srgb, var(--surface) 85%, transparent);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2), 0 0 20px color-mix(in srgb, var(--primary) 15%, transparent);
+.club-card:hover,
+.club-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(63, 167, 160, 0.34);
+  box-shadow: var(--shadow-md);
   outline: none;
 }
 
 .club-logo-wrapper {
-  width: 120px;
-  height: 120px;
+  width: 92px;
+  height: 92px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--page-bg) 60%, transparent);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 50%;
-  padding: 16px;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.03);
 }
 
-.club-card:hover .club-logo-wrapper {
-  transform: scale(1.08);
-}
-
-.club-card-logo {
+.club-card-logo,
+.club-modal-logo {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -136,58 +63,52 @@
 .club-card-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 12px;
-  flex: 1;
+  width: 100%;
+  min-width: 0;
 }
 
 .club-card-name {
   margin: 0;
-  font-size: 1.4rem;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--text-strong);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 1.28rem;
+  font-weight: 600;
+}
+
+.club-card-copy {
+  margin: 0;
+  color: var(--paper-dim);
+  line-height: 1.7;
 }
 
 .club-card-action {
-  margin-top: auto;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--primary);
-  opacity: 0.8;
-  transition: all 0.3s ease;
+  width: fit-content;
+  margin-top: auto;
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.club-card-action svg {
-  transition: transform 0.3s ease;
-}
-
-.club-card:hover .club-card-action {
-  opacity: 1;
-}
-
-.club-card:hover .club-card-action svg {
-  transform: translateX(4px);
-}
-
-/* Modal styling */
 .club-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 9, 20, 0.85);
+  z-index: 95;
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 24px;
-  z-index: 1000;
+  padding: 20px;
+  background: rgba(5, 9, 18, 0.82);
+  backdrop-filter: blur(12px);
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
 }
 
 .club-modal-overlay.active {
@@ -197,134 +118,67 @@
 
 .club-modal {
   position: relative;
-  width: min(100%, 540px);
-  max-height: 85vh;
-  overflow-y: auto;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: min(100%, 620px);
+  max-height: min(84vh, 760px);
+  overflow: auto;
+  padding: 28px;
+  border: 1px solid var(--border);
   border-radius: 28px;
-  padding: 48px 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
-  transform: scale(0.95) translateY(20px);
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: rgba(18, 26, 43, 0.98);
+  box-shadow: var(--shadow-md);
+  transform: translateY(18px) scale(0.98);
+  transition: transform 0.22s ease;
 }
 
 .club-modal.active {
-  transform: scale(1) translateY(0);
-  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .club-modal-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--text-strong);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.club-modal-close:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: rotate(90deg);
+  top: 16px;
+  right: 16px;
+  font-size: 1.4rem;
 }
 
 .club-modal-logo-wrapper {
-  width: 140px;
-  height: 140px;
-  margin: 0 auto 24px;
+  width: 124px;
+  height: 124px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.club-modal-logo {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  margin: 10px 0 18px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .club-modal h2 {
-  font-size: 2rem;
-  margin: 0 0 16px;
-  color: var(--text-strong);
-  line-height: 1.2;
+  margin: 0 0 12px;
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  letter-spacing: -0.03em;
 }
 
 .club-modal p {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 1.05rem;
-  line-height: 1.7;
   margin: 0;
+  color: var(--paper-dim);
+  line-height: 1.8;
 }
 
-.club-modal::-webkit-scrollbar {
-  width: 6px;
-}
-
-.club-modal::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.18);
-  border-radius: 999px;
-}
-
-/* Mobile responsive */
 @media (max-width: 640px) {
   .clubs-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 16px;
+    grid-template-columns: 1fr;
   }
 
-  .club-card {
-    padding: 24px 16px;
-    gap: 16px;
-    border-radius: 16px;
-  }
-
-  .club-logo-wrapper {
-    width: 80px;
-    height: 80px;
-    padding: 12px;
-  }
-
-  .club-card-name {
-    font-size: 1.15rem;
-  }
-
+  .club-card,
   .club-modal {
-    padding: 32px 24px;
-    border-radius: 20px;
-  }
-
-  .club-modal h2 {
-    font-size: 1.6rem;
-  }
-
-  .club-modal p {
-    font-size: 0.95rem;
+    padding: 22px;
   }
 
   .club-modal-logo-wrapper {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 16px;
-  }
-
-  .club-modal-close {
-    top: 12px;
-    right: 12px;
-    width: 36px;
-    height: 36px;
+    width: 108px;
+    height: 108px;
   }
 }
