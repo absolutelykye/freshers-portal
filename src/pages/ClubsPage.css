@@ -1,5 +1,5 @@
 .clubs-page-intro .eyebrow {
-  color: var(--cyan);
+  color: var(--violet);
 }
 
 .clubs-page-intro h1 {
@@ -28,17 +28,21 @@
   text-align: left;
   cursor: pointer;
   transition:
-    transform 0.24s ease,
-    border-color 0.24s ease,
-    box-shadow 0.24s ease;
+    transform 0.26s var(--ease-out),
+    border-color 0.26s ease,
+    box-shadow 0.26s ease;
 }
 
 .club-card:hover,
 .club-card:focus-visible {
-  transform: translateY(-4px);
-  border-color: rgba(63, 167, 160, 0.34);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-5px);
+  border-color: rgba(143, 123, 255, 0.35);
+  box-shadow: var(--shadow-md), 0 0 36px rgba(143, 123, 255, 0.08);
   outline: none;
+}
+
+.club-card:active {
+  transform: translateY(-1px) scale(0.99);
 }
 
 .club-logo-wrapper {
@@ -47,10 +51,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 12px;
   margin-bottom: 18px;
   border: 1px solid var(--border);
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04);
+  transition: transform 0.3s var(--ease-spring), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.club-card:hover .club-logo-wrapper {
+  transform: scale(1.06) rotate(-2deg);
+  border-color: rgba(143, 123, 255, 0.4);
+  box-shadow: 0 0 24px rgba(143, 123, 255, 0.14);
 }
 
 .club-card-logo,
@@ -63,6 +75,7 @@
 .club-card-content {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
   gap: 12px;
   width: 100%;
   min-width: 0;
@@ -88,12 +101,20 @@
   gap: 8px;
   width: fit-content;
   margin-top: auto;
-  color: var(--amber);
+  color: var(--cyan);
   font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.club-card-action span:last-child {
+  transition: transform 0.24s var(--ease-out);
+}
+
+.club-card:hover .club-card-action span:last-child {
+  transform: translate(3px, -3px);
 }
 
 .club-modal-overlay {
@@ -104,8 +125,9 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(5, 9, 18, 0.82);
-  backdrop-filter: blur(12px);
+  background: rgba(2, 4, 10, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.22s ease, visibility 0.22s ease;
@@ -122,12 +144,14 @@
   max-height: min(84vh, 760px);
   overflow: auto;
   padding: 28px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(148, 170, 220, 0.22);
   border-radius: 28px;
-  background: rgba(18, 26, 43, 0.98);
-  box-shadow: var(--shadow-md);
-  transform: translateY(18px) scale(0.98);
-  transition: transform 0.22s ease;
+  background:
+    linear-gradient(180deg, rgba(143, 123, 255, 0.06), transparent 30%),
+    rgba(11, 16, 31, 0.98);
+  box-shadow: var(--shadow-md), 0 0 60px rgba(143, 123, 255, 0.08);
+  transform: translateY(18px) scale(0.97);
+  transition: transform 0.26s var(--ease-spring);
 }
 
 .club-modal.active {
@@ -147,10 +171,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 14px;
   margin: 10px 0 18px;
   border: 1px solid var(--border);
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .club-modal h2 {

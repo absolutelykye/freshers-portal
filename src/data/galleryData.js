@@ -39,12 +39,12 @@ export const GALLERY_LOCATIONS = [
   },
   {
     slug: 'mess',
-    title: 'mess',
-    images: imagesFor('mess', 'mess'),
+    title: 'Mess',
+    images: imagesFor('mess', 'Mess'),
   },
   {
     slug: 'sports-complex',
-    title: 'Sports-Facilities',
+    title: 'Sports Facilities',
     images: imagesFor('sports-complex', 'Sports Facilities'),
   },
 

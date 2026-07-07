@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import freshersGuideLogo from '../assets/freshers-guide-logo.png'
+import { useSearchParams } from 'react-router-dom'
+import SharedNav from '../components/SharedNav.jsx'
+import SharedFooter from '../components/SharedFooter.jsx'
 import { GALLERY_LOCATIONS, getGalleryLocation } from '../data/galleryData'
 import '../App.css'
 import './GalleryPage.css'
@@ -15,15 +16,20 @@ export default function GalleryPage() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', 'dark')
     localStorage.setItem('theme', 'dark')
+    window.scrollTo(0, 0)
   }, [])
 
   const active = useMemo(() => getGalleryLocation(locSlug), [locSlug])
   const unknownSlug = Boolean(locSlug) && !active
-  const activeImage = active && lightboxIndex !== null ? active.images[lightboxIndex] : null
 
-  useEffect(() => {
+  // reset the lightbox when the location changes (adjust-state-during-render)
+  const [prevSlug, setPrevSlug] = useState(locSlug)
+  if (prevSlug !== locSlug) {
+    setPrevSlug(locSlug)
     setLightboxIndex(null)
-  }, [locSlug])
+  }
+
+  const activeImage = active && lightboxIndex !== null ? active.images[lightboxIndex] : null
 
   useEffect(() => {
     if (!active || lightboxIndex === null) return undefined
@@ -57,6 +63,7 @@ export default function GalleryPage() {
 
   function selectLocation(slug) {
     setSearchParams({ loc: slug })
+    window.scrollTo({ top: 0 })
   }
 
   function clearLocation() {
@@ -104,16 +111,7 @@ export default function GalleryPage() {
 
   return (
     <div className="subpage-shell gallery-page">
-      <header className="subpage-header">
-        <Link className="subpage-brand" to="/" aria-label="Freshers Guide home">
-          <img src={freshersGuideLogo} alt="" width={136} height={52} />
-        </Link>
-        <nav className="subpage-nav" aria-label="Gallery navigation">
-          <Link to="/">Home</Link>
-          <Link to="/clubs">Clubs</Link>
-          <Link to="/faqs">FAQs</Link>
-        </nav>
-      </header>
+      <SharedNav />
 
       <main className="subpage-main gallery-page-main">
         <div className="section-heading gallery-page-intro">
@@ -128,7 +126,7 @@ export default function GalleryPage() {
         {unknownSlug ? (
           <div className="gallery-unknown">
             <p>That location was not found.</p>
-            <button type="button" className="primary-button" onClick={clearLocation}>
+            <button type="button" className="primary-button btn-primary" onClick={clearLocation}>
               All locations
             </button>
           </div>
@@ -142,9 +140,16 @@ export default function GalleryPage() {
                     type="button"
                     className="gallery-location-option"
                     onClick={() => selectLocation(location.slug)}
+                    style={
+                      location.images[0]
+                        ? { '--cover-image': `url(${location.images[0].src})` }
+                        : undefined
+                    }
                   >
-                    <span>{location.title}</span>
-                    <small>{location.images.length} photos</small>
+                    <span className="gallery-location-name">{location.title}</span>
+                    <small className="gallery-location-count">
+                      {location.images.length} photos
+                    </small>
                   </button>
                 </li>
               ))}
@@ -153,10 +158,11 @@ export default function GalleryPage() {
         ) : (
           <>
             <div className="gallery-active-toolbar">
-              <button type="button" className="secondary-button" onClick={clearLocation}>
-                All locations
+              <button type="button" className="secondary-button btn-secondary" onClick={clearLocation}>
+                ← All locations
               </button>
               <h2 className="gallery-active-title">{active.title}</h2>
+              <span className="gallery-active-count">{active.images.length} photos</span>
             </div>
             {active.images.length === 0 ? (
               <div className="gallery-unknown">
@@ -195,6 +201,8 @@ export default function GalleryPage() {
         )}
       </main>
 
+      <SharedFooter />
+
       {activeImage ? (
         <div
           className="gallery-lightbox"
@@ -215,7 +223,7 @@ export default function GalleryPage() {
               onClick={closeLightbox}
               aria-label="Close image viewer"
             >
-              Close
+              Close ✕
             </button>
 
             <button

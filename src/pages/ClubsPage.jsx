@@ -1,13 +1,14 @@
-import { useEffect, useId, useMemo, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useEffect, useId, useMemo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import SharedNav from '../components/SharedNav.jsx'
+import SharedFooter from '../components/SharedFooter.jsx'
 import { CLUBS } from '../data/clubsData'
 import '../App.css'
 import './ClubsPage.css'
 
 export default function ClubsPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [selectedClubId, setSelectedClubId] = useState(searchParams.get('club'))
+  const selectedClubId = searchParams.get('club')
   const headingId = useId()
 
   useEffect(() => {
@@ -15,11 +16,6 @@ export default function ClubsPage() {
     localStorage.setItem('theme', 'dark')
     window.scrollTo(0, 0)
   }, [])
-
-  useEffect(() => {
-    const urlClub = searchParams.get('club')
-    setSelectedClubId(urlClub)
-  }, [searchParams])
 
   const selectedClub = useMemo(
     () => CLUBS.find((club) => club.id === selectedClubId) ?? null,
@@ -34,7 +30,7 @@ export default function ClubsPage() {
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
-        closeClub()
+        setSearchParams({})
       }
     }
 
@@ -44,15 +40,13 @@ export default function ClubsPage() {
       document.body.style.overflow = previousOverflow
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [selectedClub])
+  }, [selectedClub, setSearchParams])
 
   function openClub(club) {
-    setSelectedClubId(club.id)
     setSearchParams({ club: club.id })
   }
 
   function closeClub() {
-    setSelectedClubId(null)
     setSearchParams({})
   }
 
@@ -103,6 +97,8 @@ export default function ClubsPage() {
           ))}
         </ul>
       </main>
+
+      <SharedFooter />
 
       <div
         className={`club-modal-overlay ${selectedClub ? 'active' : ''}`}

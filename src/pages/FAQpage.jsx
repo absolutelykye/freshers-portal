@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import SharedNav from '../components/SharedNav.jsx'
+import SharedFooter from '../components/SharedFooter.jsx'
 import { FAQS, FAQ_TAG_COLORS } from '../data/faqsData'
 import '../App.css'
 
@@ -18,24 +19,32 @@ export default function FAQPage() {
   const tags = useMemo(() => ['All', ...new Set(FAQS.map((faq) => faq.tag))], [])
   const filteredFaqs = filter === 'All' ? FAQS : FAQS.filter((faq) => faq.tag === filter)
 
-  useEffect(() => {
-    if (!location.hash) return
-
+  const targetFaq = useMemo(() => {
+    if (!location.hash.startsWith('#faq-')) return null
     const targetId = Number(location.hash.replace('#faq-', ''))
-    const targetFaq = FAQS.find((faq) => faq.id === targetId)
+    return FAQS.find((faq) => faq.id === targetId) ?? null
+  }, [location.hash])
 
-    if (!targetFaq) return
-
+  // when arriving with a #faq-N hash, open that question (adjust-state-during-render)
+  const [handledHash, setHandledHash] = useState(null)
+  if (targetFaq && handledHash !== targetFaq.id) {
+    setHandledHash(targetFaq.id)
     setFilter(targetFaq.tag)
     setOpenId(targetFaq.id)
+  }
 
-    window.setTimeout(() => {
+  useEffect(() => {
+    if (!targetFaq) return undefined
+
+    const timeout = window.setTimeout(() => {
       document.getElementById(`faq-${targetFaq.id}`)?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       })
     }, 80)
-  }, [location.hash])
+
+    return () => window.clearTimeout(timeout)
+  }, [targetFaq])
 
   function toggleFaq(id) {
     setOpenId((current) => (current === id ? null : id))
@@ -58,7 +67,7 @@ export default function FAQPage() {
 
           <div className="faq-filters" role="group" aria-label="Filter FAQs by category">
             {tags.map((tag) => {
-              const activeColor = tag === 'All' ? 'var(--amber)' : FAQ_TAG_COLORS[tag]
+              const activeColor = tag === 'All' ? 'var(--cyan)' : FAQ_TAG_COLORS[tag]
               return (
                 <button
                   key={tag}
@@ -122,6 +131,8 @@ export default function FAQPage() {
           </div>
         </section>
       </main>
+
+      <SharedFooter />
     </div>
   )
 }

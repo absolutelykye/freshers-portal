@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { FaSearch, FaCheck } from 'react-icons/fa'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { FaSearch } from 'react-icons/fa'
 import freshersGuideLogo from '../assets/freshers-guide-logo.png'
 import { CLUBS } from '../data/clubsData'
 import { FAQS } from '../data/faqsData'
@@ -18,11 +18,11 @@ function searchItems() {
   const clubItems = CLUBS.map((club) => ({
     id: `club-${club.id}`,
     title: club.name,
-    subtitle: 'Student club',
+    subtitle: 'Club',
     to: `/clubs?club=${club.id}`,
   }))
 
-  const faqItems = FAQS.slice(0, 12).map((faq) => ({
+  const faqItems = FAQS.map((faq) => ({
     id: `faq-${faq.id}`,
     title: faq.question,
     subtitle: faq.tag,
@@ -32,30 +32,44 @@ function searchItems() {
   const galleryItems = GALLERY_LOCATIONS.map((location) => ({
     id: `gallery-${location.slug}`,
     title: location.title,
-    subtitle: 'Gallery location',
+    subtitle: 'Gallery',
     to: `/gallery?loc=${location.slug}`,
   }))
 
   const seniorItems = SENIORS.map((senior) => ({
     id: `senior-${senior.id}`,
     title: senior.name,
-    subtitle: 'Contact senior',
-    to: '/#contact',
+    subtitle: 'Senior',
+    href: '/#contact',
   }))
 
   return [...clubItems, ...faqItems, ...galleryItems, ...seniorItems]
 }
 
-export default function SharedNav() {
+/**
+ * floating: home-page behaviour — the navbar stays hidden while the hero
+ * (with its own logos) is on screen and slides in after scrolling past it.
+ * Subpages render it statically visible from the start.
+ */
+export default function SharedNav({ floating = false }) {
   const navigate = useNavigate()
+  const location = useLocation()
   const [isScrolled, setIsScrolled] = useState(false)
-  const [navHidden, setNavHidden] = useState(true)
+  const [navHidden, setNavHidden] = useState(floating)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const searchInputRef = useRef(null)
-  const lastScrolledRef = useRef(false)
-  const lastNavHiddenRef = useRef(true)
-  const allSearchItems = useMemo(searchItems, [])
+  const lastScrolledRef = useRef(null)
+  const lastNavHiddenRef = useRef(floating)
+  const allSearchItems = useMemo(() => searchItems(), [])
+
+  // close the mobile menu whenever the route changes
+  const [prevPathname, setPrevPathname] = useState(location.pathname)
+  if (prevPathname !== location.pathname) {
+    setPrevPathname(location.pathname)
+    setMenuOpen(false)
+  }
 
   useEffect(() => {
     let raf = 0
@@ -70,10 +84,12 @@ export default function SharedNav() {
         setIsScrolled(scrolled)
       }
 
-      const hidden = scrollY <= 80
-      if (hidden !== lastNavHiddenRef.current) {
-        lastNavHiddenRef.current = hidden
-        setNavHidden(hidden)
+      if (floating) {
+        const hidden = scrollY <= 80
+        if (hidden !== lastNavHiddenRef.current) {
+          lastNavHiddenRef.current = hidden
+          setNavHidden(hidden)
+        }
       }
     }
 
@@ -88,7 +104,7 @@ export default function SharedNav() {
       window.removeEventListener('scroll', onScroll)
       if (raf) cancelAnimationFrame(raf)
     }
-  }, [])
+  }, [floating])
 
   useEffect(() => {
     const onKeyDown = (event) => {
@@ -98,6 +114,7 @@ export default function SharedNav() {
       }
       if (event.key === 'Escape') {
         setSearchOpen(false)
+        setMenuOpen(false)
       }
     }
 
@@ -121,27 +138,47 @@ export default function SharedNav() {
   function activateSearchItem(item) {
     setSearchOpen(false)
     setSearchQuery('')
-    if (item.to) navigate(item.to)
+    if (item.to) {
+      navigate(item.to)
+    } else if (item.href) {
+      window.location.assign(item.href)
+    }
+  }
+
+  function isActive(link) {
+    return link.to && location.pathname === link.to
+  }
+
+  function renderLink(link, extraProps = {}) {
+    return link.to ? (
+      <Link
+        key={link.label}
+        to={link.to}
+        className={isActive(link) ? 'active' : undefined}
+        {...extraProps}
+      >
+        {link.label}
+      </Link>
+    ) : (
+      <a key={link.label} href={link.href} {...extraProps}>
+        {link.label}
+      </a>
+    )
   }
 
   return (
     <>
-      <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''} ${navHidden ? 'navbar-hidden' : ''}`}>
+      <nav
+        className={`navbar ${isScrolled ? 'navbar-scrolled' : ''} ${
+          navHidden && !menuOpen ? 'navbar-hidden' : ''
+        }`}
+      >
         <Link className="brand" to="/" aria-label="Freshers Guide home">
           <img src={freshersGuideLogo} alt="Freshers Guide logo" decoding="async" />
         </Link>
+
         <div className="nav-links" aria-label="Main navigation">
-          {navLinks.map((link) =>
-            link.to ? (
-              <Link key={link.label} to={link.to}>
-                {link.label}
-              </Link>
-            ) : (
-              <a key={link.label} href={link.href}>
-                {link.label}
-              </a>
-            ),
-          )}
+          {navLinks.map((link) => renderLink(link))}
           <button
             type="button"
             className="command-trigger"
@@ -153,7 +190,35 @@ export default function SharedNav() {
             <span className="command-kbd">CMD K</span>
           </button>
         </div>
+
+        <button
+          type="button"
+          className={`nav-toggle ${menuOpen ? 'open' : ''}`}
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
       </nav>
+
+      <div className={`mobile-menu ${menuOpen ? 'open' : ''}`} aria-hidden={!menuOpen}>
+        {navLinks.map((link) => renderLink(link, { onClick: () => setMenuOpen(false) }))}
+        <button
+          type="button"
+          onClick={() => {
+            setMenuOpen(false)
+            setSearchOpen(true)
+          }}
+        >
+          <span>Search</span>
+          <span className="mobile-menu-hint">
+            <FaSearch aria-hidden="true" />
+          </span>
+        </button>
+      </div>
 
       {searchOpen ? (
         <div className="command-palette-shell" onClick={() => setSearchOpen(false)}>
@@ -170,14 +235,22 @@ export default function SharedNav() {
               />
             </div>
             <ul className="command-palette-results">
-              {filteredSearchItems.map((item) => (
-                <li key={item.id}>
-                  <button type="button" className="command-palette-result" onClick={() => activateSearchItem(item)}>
-                    <span>{item.title}</span>
-                    <small>{item.subtitle}</small>
-                  </button>
-                </li>
-              ))}
+              {filteredSearchItems.length === 0 ? (
+                <li className="command-palette-empty">No matches. Try another word.</li>
+              ) : (
+                filteredSearchItems.map((item) => (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      className="command-palette-result"
+                      onClick={() => activateSearchItem(item)}
+                    >
+                      <span>{item.title}</span>
+                      <small>{item.subtitle}</small>
+                    </button>
+                  </li>
+                ))
+              )}
             </ul>
           </div>
         </div>

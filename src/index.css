@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Zen+Dots&display=swap');
+/* ---------------------------------------------------------------------------
+   Design tokens — "Deep Space" palette
+   bg      : near-black navy void
+   surface : glassy blue-slate panels
+   cyan    : primary interactive accent (electric)
+   violet  : secondary accent (aurora)
+   amber   : rare warm highlight (eyebrows, small details)
+--------------------------------------------------------------------------- */
 
 *,
 *::before,
@@ -7,35 +14,44 @@
 }
 
 :root {
-  --ink: #0b1120;
-  --surface: #121a2b;
-  --surface-2: #182338;
-  --surface-3: #1d2940;
-  --border: #26324a;
-  --border-strong: #33415d;
-  --paper: #edeae2;
-  --paper-dim: #9aa4b8;
-  --paper-faint: #5c6b85;
-  --amber: #e8a33d;
-  --amber-dim: #7a5a26;
-  --cyan: #3fa7a0;
+  --ink: #04060d;
+  --surface: #0b101f;
+  --surface-2: #101729;
+  --surface-3: #161f36;
+  --border: rgba(148, 170, 220, 0.14);
+  --border-strong: rgba(148, 170, 220, 0.26);
+
+  --paper: #eef2fb;
+  --paper-dim: #9aa7c2;
+  --paper-faint: #5f6c8a;
+
+  --cyan: #45e3ff;
+  --cyan-soft: rgba(69, 227, 255, 0.14);
+  --violet: #8f7bff;
+  --violet-soft: rgba(143, 123, 255, 0.14);
+  --amber: #ffb454;
+  --amber-soft: rgba(255, 180, 84, 0.12);
   --rust: #d1573f;
-  --success: #58c08b;
+  --success: #4ade80;
   --danger: #ea6f5d;
 
-  --shadow-sm: 0 10px 30px rgba(0, 0, 0, 0.18);
-  --shadow-md: 0 24px 64px rgba(0, 0, 0, 0.28);
-  --shadow-glow-amber: 0 0 0 1px rgba(232, 163, 61, 0.18), 0 0 40px rgba(232, 163, 61, 0.12);
-  --shadow-glow-cyan: 0 0 0 1px rgba(63, 167, 160, 0.18), 0 0 40px rgba(63, 167, 160, 0.12);
+  --shadow-sm: 0 10px 30px rgba(2, 4, 10, 0.45);
+  --shadow-md: 0 24px 64px rgba(2, 4, 10, 0.6);
+  --shadow-glow-cyan: 0 0 0 1px rgba(69, 227, 255, 0.16), 0 8px 40px rgba(69, 227, 255, 0.12);
+  --shadow-glow-violet: 0 0 0 1px rgba(143, 123, 255, 0.16), 0 8px 40px rgba(143, 123, 255, 0.14);
+  --shadow-glow-amber: 0 0 0 1px rgba(255, 180, 84, 0.18), 0 8px 40px rgba(255, 180, 84, 0.12);
 
   --r-sm: 12px;
   --r-md: 18px;
-  --r-card: 24px;
+  --r-card: 22px;
 
   --font-display: 'Space Grotesk', 'Inter', sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
   --font-accent: 'Zen Dots', 'Space Grotesk', sans-serif;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   --scroll-progress: 0;
   --hero-bg-opacity: 1;
@@ -57,19 +73,43 @@ body {
   margin: 0;
   min-width: 320px;
   overflow-x: clip;
-  background:
-    radial-gradient(circle at top, rgba(63, 167, 160, 0.08), transparent 34%),
-    radial-gradient(circle at 85% 12%, rgba(232, 163, 61, 0.08), transparent 28%),
-    var(--ink);
+  background: var(--ink);
   color: var(--paper);
   font-family: var(--font-body);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-body[data-route='home'] {
+/* Ambient aurora — fixed, behind everything */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(11, 17, 32, 0) 0vh, rgba(11, 17, 32, 0.08) 45vh, rgba(11, 17, 32, 0.98) 96vh),
-    var(--ink);
+    radial-gradient(52% 38% at 12% -6%, rgba(69, 227, 255, 0.07), transparent 70%),
+    radial-gradient(46% 34% at 88% 4%, rgba(143, 123, 255, 0.08), transparent 70%),
+    radial-gradient(60% 44% at 50% 112%, rgba(69, 227, 255, 0.05), transparent 70%);
+}
+
+/* Fine blueprint grid, fading toward the bottom */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(148, 170, 220, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 170, 220, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.25) 60%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.25) 60%, transparent);
+}
+
+body[data-route='home']::after {
+  opacity: 0.6;
 }
 
 a,
@@ -97,8 +137,14 @@ a {
 }
 
 ::selection {
-  background: rgba(232, 163, 61, 0.26);
-  color: var(--paper);
+  background: rgba(69, 227, 255, 0.28);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(69, 227, 255, 0.75);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar {
@@ -112,9 +158,82 @@ a {
 ::-webkit-scrollbar-thumb {
   border: 2px solid var(--ink);
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(232, 163, 61, 0.5), rgba(63, 167, 160, 0.45));
+  background: linear-gradient(180deg, rgba(69, 227, 255, 0.45), rgba(143, 123, 255, 0.45));
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(232, 163, 61, 0.72), rgba(63, 167, 160, 0.62));
+  background: linear-gradient(180deg, rgba(69, 227, 255, 0.7), rgba(143, 123, 255, 0.7));
+}
+
+/* --------------------------------------------------------------------------
+   Shared keyframes
+-------------------------------------------------------------------------- */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(69, 227, 255, 0.35);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(69, 227, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(69, 227, 255, 0);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes ripple-out {
+  from {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.6);
+  }
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -80;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,19 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
   FaCheck,
   FaChevronRight,
   FaCopy,
-  FaGlobe,
   FaInstagram,
-  FaLinkedin,
-  FaSearch,
   FaTelegram,
   FaWhatsapp,
 } from 'react-icons/fa'
 import { motion, useReducedMotion } from 'framer-motion'
 import campusHero from '../assets/campus-hero.jpeg'
 import freshersGuideLogo from '../assets/freshers-guide-logo.png'
+import SharedNav from '../components/SharedNav.jsx'
+import SharedFooter from '../components/SharedFooter.jsx'
 import { ScrollReveal, StaggerGrid, StaggerItem } from '../components/ScrollReveal.jsx'
 import { CLUBS } from '../data/clubsData'
 import { FAQS } from '../data/faqsData'
@@ -65,13 +64,6 @@ const starterCards = [
   },
 ]
 
-const navLinks = [
-  { label: 'Connect', href: '#contact' },
-  { label: 'Clubs', to: '/clubs' },
-  { label: 'FAQs', to: '/faqs' },
-  { label: 'Gallery', to: '/gallery' },
-]
-
 const iiserLogoUrl =
   'https://iiserbpr.ac.in/webcontrol/uploads/file_upload/Logo_6936_X_22001728276596.png'
 
@@ -86,54 +78,71 @@ function contactIcon(type) {
   return <FaWhatsapp aria-hidden="true" />
 }
 
-function searchItems() {
-  const clubItems = CLUBS.map((club) => ({
-    id: `club-${club.id}`,
-    title: club.name,
-    subtitle: 'Student club',
-    to: `/clubs?club=${club.id}`,
-  }))
+/* Counts up from 0 when scrolled into view */
+function StatCounter({ value, suffix = '', label }) {
+  const reduceMotion = useReducedMotion()
+  const ref = useRef(null)
+  const [display, setDisplay] = useState(reduceMotion ? value : 0)
 
-  const faqItems = FAQS.slice(0, 12).map((faq) => ({
-    id: `faq-${faq.id}`,
-    title: faq.question,
-    subtitle: faq.tag,
-    to: `/faqs#faq-${faq.id}`,
-  }))
+  useEffect(() => {
+    if (reduceMotion) return undefined
 
-  const galleryItems = GALLERY_LOCATIONS.map((location) => ({
-    id: `gallery-${location.slug}`,
-    title: location.title,
-    subtitle: 'Gallery location',
-    to: `/gallery?loc=${location.slug}`,
-  }))
+    const node = ref.current
+    if (!node) return undefined
 
-  const seniorItems = SENIORS.map((senior) => ({
-    id: `senior-${senior.id}`,
-    title: senior.name,
-    subtitle: 'Contact senior',
-    href: '#contact',
-  }))
+    let raf = 0
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        observer.disconnect()
 
-  return [...clubItems, ...faqItems, ...galleryItems, ...seniorItems]
+        const duration = 1100
+        const start = performance.now()
+
+        const tick = (now) => {
+          const t = Math.min((now - start) / duration, 1)
+          const eased = 1 - Math.pow(1 - t, 3)
+          setDisplay(Math.round(eased * value))
+          if (t < 1) raf = requestAnimationFrame(tick)
+        }
+
+        raf = requestAnimationFrame(tick)
+      },
+      { threshold: 0.4 },
+    )
+
+    observer.observe(node)
+
+    return () => {
+      observer.disconnect()
+      cancelAnimationFrame(raf)
+    }
+  }, [value, reduceMotion])
+
+  return (
+    <div className="stat-card way-card" ref={ref}>
+      <span className="stat-value">
+        {display}
+        <em>{suffix}</em>
+      </span>
+      <span className="stat-label">{label}</span>
+    </div>
+  )
 }
 
 export default function Home() {
-  const navigate = useNavigate()
   const reduceMotion = useReducedMotion()
   const [isScrolled, setIsScrolled] = useState(false)
-  const [navHidden, setNavHidden] = useState(true)
-  const lastScrollYForNavRef = useRef(0)
-  const lastNavHiddenRef = useRef(true)  
   const [openSeniorId, setOpenSeniorId] = useState(null)
   const [copiedLabel, setCopiedLabel] = useState('')
-  const [searchOpen, setSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
   const [contactFilter, setContactFilter] = useState('All')
-  const searchInputRef = useRef(null)
   const lastOpacityRef = useRef(-1)
   const lastScrolledRef = useRef(null)
-  const allSearchItems = useMemo(searchItems, [])
+
+  const galleryPhotoCount = useMemo(
+    () => GALLERY_LOCATIONS.reduce((total, location) => total + location.images.length, 0),
+    [],
+  )
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', 'dark')
@@ -167,12 +176,6 @@ export default function Home() {
         lastScrolledRef.current = scrolled
         setIsScrolled(scrolled)
       }
-
-      const hidden = scrollY <= 80
-      if (hidden !== lastNavHiddenRef.current) {
-        lastNavHiddenRef.current = hidden
-        setNavHidden(hidden)
-      }
     }
 
     const onScroll = () => {
@@ -185,18 +188,14 @@ export default function Home() {
     return () => {
       window.removeEventListener('scroll', onScroll)
       if (raf) cancelAnimationFrame(raf)
+      document.documentElement.style.setProperty('--scroll-progress', '0')
+      document.documentElement.style.setProperty('--hero-bg-opacity', '1')
     }
   }, [])
 
   useEffect(() => {
     const onKeyDown = (event) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-        event.preventDefault()
-        setSearchOpen((open) => !open)
-      }
-
       if (event.key === 'Escape') {
-        setSearchOpen(false)
         setOpenSeniorId(null)
       }
     }
@@ -204,11 +203,6 @@ export default function Home() {
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [])
-
-  useEffect(() => {
-    if (!searchOpen) return
-    searchInputRef.current?.focus()
-  }, [searchOpen])
 
   useEffect(() => {
     if (!copiedLabel) return undefined
@@ -221,31 +215,7 @@ export default function Home() {
     [contactFilter],
   )
 
-  const filteredSearchItems = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase()
-    if (!query) return allSearchItems.slice(0, 10)
-    return allSearchItems
-      .filter((item) =>
-        `${item.title} ${item.subtitle}`.toLowerCase().includes(query),
-      )
-      .slice(0, 10)
-  }, [allSearchItems, searchQuery])
-
   const marqueeWords = [...lingoWords, ...lingoWords]
-
-  function activateSearchItem(item) {
-    setSearchOpen(false)
-    setSearchQuery('')
-
-    if (item.to) {
-      navigate(item.to)
-      return
-    }
-
-    if (item.href) {
-      window.location.hash = item.href.replace('#', '')
-    }
-  }
 
   async function copyContact(value, label) {
     try {
@@ -259,37 +229,9 @@ export default function Home() {
   return (
     <>
       <div className="page-progress" aria-hidden="true" />
-      <main className="wayfinding-page">
-        
-          <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''} ${navHidden ? 'navbar-hidden' : ''}`}>
-          <a className="brand" href="#home" aria-label="Freshers Guide home">
-            <img src={freshersGuideLogo} alt="Freshers Guide logo" decoding="async" />
-          </a>
-          <div className="nav-links" aria-label="Main navigation">
-            {navLinks.map((link) =>
-              link.to ? (
-                <Link key={link.label} to={link.to}>
-                  {link.label}
-                </Link>
-              ) : (
-                <a key={link.label} href={link.href}>
-                  {link.label}
-                </a>
-              ),
-            )}
-            <button
-              type="button"
-              className="command-trigger"
-              onClick={() => setSearchOpen(true)}
-              aria-label="Open search"
-            >
-              <FaSearch aria-hidden="true" />
-              <span>Search</span>
-              <span className="command-kbd">CMD K</span>
-            </button>
-          </div>
-        </nav>
+      <SharedNav floating />
 
+      <main className="wayfinding-page">
         <section className="hero-section" id="home" style={{ '--hero-image': `url(${campusHero})` }}>
           <div className={`hero-logos ${isScrolled ? 'hero-logos-hidden' : 'hero-logos-visible'}`} aria-label="IISER Berhampur and Freshers Guide logos">
             <img className="hero-logo hero-logo-iiser" src={iiserLogoUrl} alt="IISER Berhampur logo" decoding="async" fetchPriority="high" />
@@ -319,6 +261,10 @@ export default function Home() {
               </a>
             </div>
           </motion.div>
+
+          <div className="hero-scroll-hint" aria-hidden="true">
+            Scroll
+          </div>
         </section>
 
         <ScrollReveal className="lingo-strip" aria-label="Campus lingo">
@@ -328,6 +274,15 @@ export default function Home() {
                 {word}
               </span>
             ))}
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal className="section stats-section" aria-label="Campus in numbers">
+          <div className="stats-grid">
+            <StatCounter value={CLUBS.length} suffix="+" label="Student clubs" />
+            <StatCounter value={galleryPhotoCount} suffix="+" label="Campus photos" />
+            <StatCounter value={FAQS.length} label="Questions answered" />
+            <StatCounter value={SENIORS.length} label="Seniors on call" />
           </div>
         </ScrollReveal>
 
@@ -432,7 +387,7 @@ export default function Home() {
             {filteredSeniors.map((senior) => (
               <article className={`senior-card way-card ${openSeniorId === senior.id ? 'show-contact' : ''}`} key={senior.id}>
                 <span className="card-code">{senior.code}</span>
-                <img src={senior.image} alt={`${senior.name} portrait`} className="senior-image" />
+                <img src={senior.image} alt={`${senior.name} portrait`} className="senior-image" loading="lazy" />
                 <h3>{senior.name}</h3>
                 <p className="senior-role">{senior.year}</p>
 
@@ -479,75 +434,7 @@ export default function Home() {
         </ScrollReveal>
       </main>
 
-      <ScrollReveal className="footer" element="footer">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <h2>Freshers Guide</h2>
-            <p>Built to help first-years find their footing faster.</p>
-          </div>
-
-          <div className="footer-column">
-            <h3>Explore</h3>
-            <Link to="/clubs">Clubs</Link>
-            <Link to="/gallery">Gallery</Link>
-            <a href="#start-here">Starter kit</a>
-          </div>
-
-          <div className="footer-column">
-            <h3>Community</h3>
-            <a href="#contact">Contact seniors</a>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <div className="footer-credit">
-            <span>Made by</span>
-            <a href="https://vedantpardhi.vercel.app" target="_blank" rel="noreferrer" className="footer-credit-link">
-              Vedant Pardhi
-            </a>
-            <span className="footer-dot">•</span>
-            <a href="https://vedantpardhi.vercel.app" target="_blank" rel="noreferrer" className="footer-icon" aria-label="Portfolio">
-              <FaGlobe />
-            </a>
-            <span className="footer-dot">•</span>
-            <a href="https://linkedin.com/in/vedantpardhi" target="_blank" rel="noreferrer" className="footer-icon" aria-label="LinkedIn">
-              <FaLinkedin />
-            </a>
-            <span className="footer-dot">•</span>
-            <a href="https://instagram.com/crustrohl" target="_blank" rel="noreferrer" className="footer-icon" aria-label="Instagram">
-              <FaInstagram />
-            </a>
-          </div>
-        </div>
-      </ScrollReveal>
-
-      {searchOpen ? (
-        <div className="command-palette-shell" onClick={() => setSearchOpen(false)}>
-          <div className="command-palette" onClick={(event) => event.stopPropagation()}>
-            <div className="command-palette-head">
-              <FaSearch aria-hidden="true" />
-              <input
-                ref={searchInputRef}
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                className="command-palette-input"
-                placeholder="Search clubs, seniors, FAQs, gallery locations..."
-                aria-label="Search the guide"
-              />
-            </div>
-            <ul className="command-palette-results">
-              {filteredSearchItems.map((item) => (
-                <li key={item.id}>
-                  <button type="button" className="command-palette-result" onClick={() => activateSearchItem(item)}>
-                    <span>{item.title}</span>
-                    <small>{item.subtitle}</small>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      ) : null}
+      <SharedFooter />
 
       {copiedLabel ? (
         <div className="copy-toast" role="status" aria-live="polite">
