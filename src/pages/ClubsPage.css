@@ -19,6 +19,23 @@
   gap: 20px;
 }
 
+/* rotate accent colors across the club grid */
+.clubs-grid > :nth-child(4n + 1) {
+  --card-accent: var(--cyan);
+}
+
+.clubs-grid > :nth-child(4n + 2) {
+  --card-accent: var(--violet);
+}
+
+.clubs-grid > :nth-child(4n + 3) {
+  --card-accent: var(--pink);
+}
+
+.clubs-grid > :nth-child(4n) {
+  --card-accent: var(--amber);
+}
+
 .club-card {
   height: 100%;
   display: flex;
@@ -36,8 +53,8 @@
 .club-card:hover,
 .club-card:focus-visible {
   transform: translateY(-5px);
-  border-color: rgba(143, 123, 255, 0.35);
-  box-shadow: var(--shadow-md), 0 0 36px rgba(143, 123, 255, 0.08);
+  border-color: color-mix(in srgb, var(--card-accent, var(--violet)) 40%, transparent);
+  box-shadow: var(--shadow-md), 0 0 36px color-mix(in srgb, var(--card-accent, var(--violet)) 9%, transparent);
   outline: none;
 }
 
@@ -61,8 +78,8 @@
 
 .club-card:hover .club-logo-wrapper {
   transform: scale(1.06) rotate(-2deg);
-  border-color: rgba(143, 123, 255, 0.4);
-  box-shadow: 0 0 24px rgba(143, 123, 255, 0.14);
+  border-color: color-mix(in srgb, var(--card-accent, var(--violet)) 45%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--card-accent, var(--violet)) 16%, transparent);
 }
 
 .club-card-logo,
@@ -101,7 +118,7 @@
   gap: 8px;
   width: fit-content;
   margin-top: auto;
-  color: var(--cyan);
+  color: var(--card-accent, var(--cyan));
   font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 600;

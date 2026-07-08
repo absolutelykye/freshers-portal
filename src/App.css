@@ -75,7 +75,7 @@ main {
   overflow: hidden;
 }
 
-/* top gradient hairline */
+/* top gradient hairline — takes the card's accent when one is set */
 .way-card::before {
   content: '';
   position: absolute;
@@ -83,7 +83,12 @@ main {
   left: 10%;
   right: 10%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(69, 227, 255, 0.35), rgba(143, 123, 255, 0.35), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--card-accent, var(--cyan)) 50%, transparent),
+    transparent
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -100,7 +105,7 @@ main {
   inset: 0;
   background: radial-gradient(
     340px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(69, 227, 255, 0.08),
+    color-mix(in srgb, var(--card-accent, var(--cyan)) 9%, transparent),
     transparent 62%
   );
   opacity: 0;
@@ -699,10 +704,39 @@ main {
   text-transform: uppercase;
   -webkit-text-stroke: 1.6px rgba(105, 152, 226, 0.5);
   text-shadow: 0 0 36px rgba(69, 227, 255, 0.12);
+  pointer-events: auto;
+  cursor: default;
+  transition: color 0.25s ease, transform 0.25s var(--ease-spring);
 }
 
 .lingo-word:nth-child(3n) {
-  -webkit-text-stroke-color: rgba(143, 123, 255, 0.42);
+  -webkit-text-stroke-color: rgba(143, 123, 255, 0.45);
+}
+
+.lingo-word:nth-child(4n) {
+  -webkit-text-stroke-color: rgba(255, 122, 194, 0.4);
+}
+
+.lingo-word:nth-child(5n) {
+  -webkit-text-stroke-color: rgba(255, 180, 84, 0.42);
+}
+
+/* fidget: hovering a passing word fills it with its color */
+.lingo-word:hover {
+  color: rgba(105, 152, 226, 0.85);
+  transform: scale(1.06);
+}
+
+.lingo-word:nth-child(3n):hover {
+  color: var(--violet);
+}
+
+.lingo-word:nth-child(4n):hover {
+  color: var(--pink);
+}
+
+.lingo-word:nth-child(5n):hover {
+  color: var(--amber);
 }
 
 @keyframes lingo-marquee {
@@ -794,8 +828,8 @@ main {
 
 .starter-card-link:hover {
   transform: translateY(-5px);
-  border-color: rgba(69, 227, 255, 0.32);
-  box-shadow: var(--shadow-md), 0 0 36px rgba(69, 227, 255, 0.07);
+  border-color: color-mix(in srgb, var(--card-accent, var(--cyan)) 38%, transparent);
+  box-shadow: var(--shadow-md), 0 0 36px color-mix(in srgb, var(--card-accent, var(--cyan)) 9%, transparent);
 }
 
 .starter-card-link:active {
@@ -823,7 +857,7 @@ main {
   gap: 8px;
   margin-top: auto;
   padding-top: 20px;
-  color: var(--cyan);
+  color: var(--card-accent, var(--cyan));
   font-family: var(--font-mono);
   font-size: 0.82rem;
   font-weight: 600;
@@ -837,6 +871,27 @@ main {
 
 .starter-card-link:hover .card-arrow svg {
   transform: translateX(5px);
+}
+
+/* Per-section accent colors */
+#clubs .eyebrow {
+  color: var(--violet);
+}
+
+#faqs .eyebrow {
+  color: var(--amber);
+}
+
+#gallery .eyebrow {
+  color: var(--pink);
+}
+
+#contact .eyebrow {
+  color: var(--green);
+}
+
+.faq-heading .eyebrow {
+  color: var(--amber);
 }
 
 /* --------------------------------------------------------------------------
@@ -859,6 +914,17 @@ main {
   gap: 4px;
   padding: 24px 26px;
   text-align: left;
+  cursor: pointer;
+  transition: transform 0.24s var(--ease-spring), border-color 0.24s ease, box-shadow 0.24s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--card-accent, var(--cyan)) 40%, transparent);
+}
+
+.stat-card:active {
+  transform: scale(0.96);
 }
 
 .stat-value {
@@ -873,10 +939,13 @@ main {
 
 .stat-value em {
   font-style: normal;
-  color: var(--cyan);
+  color: var(--card-accent, var(--cyan));
 }
 
 .stat-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--paper-dim);
   font-family: var(--font-mono);
   font-size: 0.74rem;
@@ -885,13 +954,22 @@ main {
   text-transform: uppercase;
 }
 
+.stat-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--card-accent, var(--cyan));
+  box-shadow: 0 0 8px var(--card-accent, var(--cyan));
+}
+
 /* --------------------------------------------------------------------------
    Preview sections
 -------------------------------------------------------------------------- */
 
 .placeholder-section {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 24px;
   border-top: 1px solid rgba(148, 170, 220, 0.08);
@@ -899,6 +977,306 @@ main {
 
 .gallery-preview-heading .gallery-view-button {
   margin-top: 24px;
+}
+
+.preview-art {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   Fidget atom
+-------------------------------------------------------------------------- */
+
+.fidget-atom-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.fidget-atom {
+  position: relative;
+  width: 138px;
+  height: 138px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  filter: hue-rotate(var(--atom-hue, 0deg));
+  transition: filter 0.35s ease, transform 0.2s var(--ease-spring);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fidget-atom:active {
+  transform: scale(0.9);
+}
+
+.atom-nucleus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #b5f4ff, var(--cyan) 55%, #1c7ea6);
+  box-shadow: 0 0 20px rgba(69, 227, 255, 0.8);
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.fidget-atom.excited .atom-nucleus {
+  transform: scale(1.4);
+}
+
+.atom-orbit {
+  position: absolute;
+  border: 1px solid rgba(69, 227, 255, 0.32);
+  border-radius: 50%;
+  animation: atom-spin 4.6s linear infinite;
+}
+
+.atom-orbit-1 {
+  inset: 0;
+}
+
+.atom-orbit-2 {
+  inset: 14%;
+  border-color: rgba(143, 123, 255, 0.36);
+  animation-duration: 3.3s;
+  animation-direction: reverse;
+}
+
+.atom-orbit-3 {
+  inset: 28%;
+  border-color: rgba(255, 180, 84, 0.36);
+  animation-duration: 2.4s;
+}
+
+.fidget-atom.excited .atom-orbit {
+  animation-duration: 0.7s;
+}
+
+.atom-electron {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px rgba(69, 227, 255, 0.9);
+}
+
+.atom-orbit-2 .atom-electron {
+  background: var(--violet);
+  box-shadow: 0 0 10px rgba(143, 123, 255, 0.9);
+}
+
+.atom-orbit-3 .atom-electron {
+  background: var(--amber);
+  box-shadow: 0 0 10px rgba(255, 180, 84, 0.9);
+}
+
+.atom-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(69, 227, 255, 0.55);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fidget-atom.excited .atom-ring {
+  animation: atom-pulse 0.7s var(--ease-out) forwards;
+}
+
+@keyframes atom-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes atom-pulse {
+  from {
+    opacity: 0.85;
+    transform: scale(0.35);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+.fidget-atom-caption,
+.photo-stack-hint {
+  margin: 0;
+  color: var(--paper-faint);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Photo stack
+-------------------------------------------------------------------------- */
+
+.photo-stack-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.photo-stack {
+  position: relative;
+  width: min(300px, 76vw);
+  height: 210px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.photo-stack-card {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 18px;
+  background: var(--surface-2);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.5s var(--ease-spring), filter 0.4s ease, opacity 0.4s ease;
+}
+
+.photo-stack-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-stack-card figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 26px 14px 12px;
+  background: linear-gradient(180deg, transparent, rgba(2, 4, 10, 0.9));
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.stack-pos-0 {
+  transform: rotate(-2deg);
+  z-index: 4;
+}
+
+.stack-pos-1 {
+  transform: rotate(5deg) translate(16px, 8px) scale(0.96);
+  z-index: 3;
+  filter: brightness(0.65);
+}
+
+.stack-pos-2 {
+  transform: rotate(-7deg) translate(-16px, 12px) scale(0.92);
+  z-index: 2;
+  filter: brightness(0.45);
+}
+
+.stack-pos-3 {
+  transform: rotate(2deg) translateY(16px) scale(0.88);
+  z-index: 1;
+  opacity: 0.55;
+  filter: brightness(0.35);
+}
+
+.photo-stack:hover .stack-pos-0 {
+  transform: rotate(-2deg) translateY(-6px);
+}
+
+.photo-stack:active .stack-pos-0 {
+  transform: rotate(-2deg) scale(0.97);
+}
+
+/* --------------------------------------------------------------------------
+   Constellation art
+-------------------------------------------------------------------------- */
+
+.constellation {
+  width: min(240px, 60vw);
+  height: auto;
+  overflow: visible;
+}
+
+.constel-line {
+  fill: none;
+  stroke: rgba(143, 123, 255, 0.3);
+  stroke-width: 1;
+  stroke-dasharray: 4 5;
+  animation: dash-flow 6s linear infinite;
+}
+
+.constel-dot {
+  fill: var(--violet);
+  animation: star-twinkle 3s ease-in-out infinite alternate;
+}
+
+.constel-dot:nth-child(3n) {
+  fill: var(--cyan);
+  animation-delay: 0.8s;
+}
+
+.constel-dot:nth-child(4n) {
+  fill: var(--pink);
+  animation-delay: 1.6s;
+}
+
+.constel-dot:nth-child(5n) {
+  fill: var(--amber);
+  animation-delay: 2.2s;
+}
+
+/* --------------------------------------------------------------------------
+   Wave divider
+-------------------------------------------------------------------------- */
+
+.wave-divider {
+  margin-inline: calc(50% - 50vw);
+  height: 84px;
+  overflow: hidden;
+}
+
+.wave-divider svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.wave {
+  animation: wave-drift 16s linear infinite;
+}
+
+.wave-1 {
+  fill: rgba(69, 227, 255, 0.07);
+}
+
+.wave-2 {
+  fill: rgba(143, 123, 255, 0.06);
+  animation-duration: 10s;
+  animation-delay: -4s;
+}
+
+@keyframes wave-drift {
+  to {
+    transform: translateX(-1440px);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -918,14 +1296,29 @@ main {
 }
 
 .senior-filter-chip.is-active {
-  color: var(--cyan);
-  border-color: rgba(69, 227, 255, 0.45);
-  background: rgba(69, 227, 255, 0.09);
-  box-shadow: var(--shadow-glow-cyan);
+  color: var(--chip-accent, var(--cyan));
+  border-color: color-mix(in srgb, var(--chip-accent, var(--cyan)) 48%, transparent);
+  background: color-mix(in srgb, var(--chip-accent, var(--cyan)) 10%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--chip-accent, var(--cyan)) 18%, transparent),
+    0 8px 40px color-mix(in srgb, var(--chip-accent, var(--cyan)) 12%, transparent);
 }
 
 .senior-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* rotate accent colors across the grid */
+.senior-grid > :nth-child(3n + 1) {
+  --card-accent: var(--cyan);
+}
+
+.senior-grid > :nth-child(3n + 2) {
+  --card-accent: var(--violet);
+}
+
+.senior-grid > :nth-child(3n) {
+  --card-accent: var(--pink);
 }
 
 .senior-card {
@@ -937,8 +1330,8 @@ main {
 
 .senior-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(143, 123, 255, 0.3);
-  box-shadow: var(--shadow-md), 0 0 36px rgba(143, 123, 255, 0.07);
+  border-color: color-mix(in srgb, var(--card-accent, var(--violet)) 35%, transparent);
+  box-shadow: var(--shadow-md), 0 0 36px color-mix(in srgb, var(--card-accent, var(--violet)) 8%, transparent);
 }
 
 .senior-image {
@@ -1085,6 +1478,14 @@ main {
   margin: 0 auto;
   grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr));
   align-items: start;
+}
+
+.footer-brand h2 {
+  width: fit-content;
+  background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .footer-column {
@@ -1394,9 +1795,9 @@ main {
 }
 
 .faq-item.open {
-  border-color: rgba(69, 227, 255, 0.28);
-  background: rgba(69, 227, 255, 0.03);
-  box-shadow: 0 0 28px rgba(69, 227, 255, 0.05);
+  border-color: color-mix(in srgb, var(--faq-accent, var(--cyan)) 42%, transparent);
+  background: color-mix(in srgb, var(--faq-accent, var(--cyan)) 4%, transparent);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--faq-accent, var(--cyan)) 7%, transparent);
 }
 
 .faq-question {
@@ -1446,7 +1847,7 @@ main {
 
 .faq-item.open .faq-icon {
   transform: rotate(45deg);
-  color: var(--cyan);
+  color: var(--faq-accent, var(--cyan));
 }
 
 /* grid-rows trick: animates open/close without clipping long answers */
@@ -1504,6 +1905,13 @@ main {
 
   .placeholder-section {
     flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .preview-art {
+    width: 100%;
+    justify-content: center;
+    padding-top: 8px;
   }
 }
 

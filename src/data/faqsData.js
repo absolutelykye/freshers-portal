@@ -1,9 +1,9 @@
 export const FAQ_TAG_COLORS = {
-  Health: '#2563eb',
-  Security: '#7c3aed',
-  'Campus Life': '#059669',
-  Academics: '#db2777',
-  Careers: '#d97706',
+  Health: '#5eb0ff',
+  Security: '#a78bfa',
+  'Campus Life': '#34d399',
+  Academics: '#f472b6',
+  Careers: '#fbbf24',
 }
 
 export const FAQS = [

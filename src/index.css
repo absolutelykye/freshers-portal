@@ -31,6 +31,8 @@
   --violet-soft: rgba(143, 123, 255, 0.14);
   --amber: #ffb454;
   --amber-soft: rgba(255, 180, 84, 0.12);
+  --pink: #ff7ac2;
+  --green: #4ade80;
   --rust: #d1573f;
   --success: #4ade80;
   --danger: #ea6f5d;
@@ -163,6 +165,203 @@ a {
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, rgba(69, 227, 255, 0.7), rgba(143, 123, 255, 0.7));
+}
+
+/* --------------------------------------------------------------------------
+   Background FX — orbs, stars, shooting stars (see BackgroundFX.jsx)
+-------------------------------------------------------------------------- */
+
+.bg-fx {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-orb {
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 50%;
+}
+
+.bg-orb-1 {
+  top: -30vmax;
+  left: -18vmax;
+  background: radial-gradient(circle, rgba(69, 227, 255, 0.09), transparent 62%);
+  animation: orb-drift-1 46s ease-in-out infinite alternate;
+}
+
+.bg-orb-2 {
+  top: 10vh;
+  right: -26vmax;
+  background: radial-gradient(circle, rgba(143, 123, 255, 0.1), transparent 62%);
+  animation: orb-drift-2 38s ease-in-out infinite alternate;
+}
+
+.bg-orb-3 {
+  bottom: -34vmax;
+  left: 22vw;
+  background: radial-gradient(circle, rgba(255, 122, 194, 0.06), transparent 62%);
+  animation: orb-drift-3 52s ease-in-out infinite alternate;
+}
+
+@keyframes orb-drift-1 {
+  to {
+    transform: translate(9vw, 7vh) scale(1.12);
+  }
+}
+
+@keyframes orb-drift-2 {
+  to {
+    transform: translate(-8vw, 12vh) scale(0.92);
+  }
+}
+
+@keyframes orb-drift-3 {
+  to {
+    transform: translate(10vw, -8vh) scale(1.08);
+  }
+}
+
+.bg-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.bg-stars-sm {
+  box-shadow:
+    3vw 12vh 0 rgba(238, 242, 251, 0.5),
+    9vw 44vh 0 rgba(69, 227, 255, 0.45),
+    14vw 78vh 0 rgba(238, 242, 251, 0.32),
+    18vw 23vh 0 rgba(143, 123, 255, 0.5),
+    24vw 62vh 0 rgba(238, 242, 251, 0.42),
+    29vw 8vh 0 rgba(238, 242, 251, 0.55),
+    33vw 89vh 0 rgba(69, 227, 255, 0.35),
+    38vw 34vh 0 rgba(238, 242, 251, 0.3),
+    44vw 71vh 0 rgba(255, 122, 194, 0.4),
+    49vw 16vh 0 rgba(238, 242, 251, 0.5),
+    54vw 52vh 0 rgba(238, 242, 251, 0.35),
+    58vw 92vh 0 rgba(143, 123, 255, 0.4),
+    63vw 27vh 0 rgba(238, 242, 251, 0.48),
+    68vw 66vh 0 rgba(69, 227, 255, 0.42),
+    73vw 6vh 0 rgba(238, 242, 251, 0.36),
+    78vw 41vh 0 rgba(238, 242, 251, 0.52),
+    83vw 84vh 0 rgba(255, 180, 84, 0.4),
+    88vw 19vh 0 rgba(238, 242, 251, 0.44),
+    92vw 57vh 0 rgba(143, 123, 255, 0.38),
+    96vw 33vh 0 rgba(238, 242, 251, 0.5),
+    6vw 96vh 0 rgba(238, 242, 251, 0.3),
+    47vw 97vh 0 rgba(69, 227, 255, 0.3),
+    86vw 96vh 0 rgba(238, 242, 251, 0.34),
+    21vw 49vh 0 rgba(255, 122, 194, 0.32);
+  animation: star-twinkle 4.2s ease-in-out infinite alternate;
+}
+
+.bg-stars-lg {
+  width: 3px;
+  height: 3px;
+  box-shadow:
+    7vw 31vh 0 rgba(69, 227, 255, 0.6),
+    16vw 67vh 0 rgba(238, 242, 251, 0.5),
+    27vw 41vh 0 rgba(143, 123, 255, 0.55),
+    36vw 13vh 0 rgba(238, 242, 251, 0.55),
+    46vw 83vh 0 rgba(255, 122, 194, 0.5),
+    56vw 38vh 0 rgba(238, 242, 251, 0.45),
+    66vw 91vh 0 rgba(69, 227, 255, 0.5),
+    76vw 21vh 0 rgba(255, 180, 84, 0.5),
+    85vw 63vh 0 rgba(238, 242, 251, 0.5),
+    94vw 9vh 0 rgba(143, 123, 255, 0.5),
+    12vw 88vh 0 rgba(238, 242, 251, 0.4),
+    61vw 4vh 0 rgba(255, 122, 194, 0.42);
+  animation: star-twinkle 5.6s ease-in-out 1.8s infinite alternate;
+}
+
+@keyframes star-twinkle {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.bg-shooting-star {
+  position: absolute;
+  top: 14%;
+  left: -12%;
+  width: 130px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.75), rgba(69, 227, 255, 0.3), transparent);
+  opacity: 0;
+  transform: rotate(14deg);
+  animation: shooting 11s ease-in infinite 2.5s;
+}
+
+.bg-shooting-star-2 {
+  top: 58%;
+  width: 100px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(143, 123, 255, 0.3), transparent);
+  animation-duration: 14s;
+  animation-delay: 8s;
+}
+
+@keyframes shooting {
+  0% {
+    transform: translate(0, 0) rotate(14deg);
+    opacity: 0;
+  }
+  2% {
+    opacity: 0.9;
+  }
+  11% {
+    transform: translate(115vw, 30vh) rotate(14deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(115vw, 30vh) rotate(14deg);
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Click sparkles (spawned from App.jsx)
+-------------------------------------------------------------------------- */
+
+.click-burst {
+  position: fixed;
+  z-index: 99;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.click-burst i {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: spark-fly 0.6s var(--ease-out) forwards;
+}
+
+@keyframes spark-fly {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--dx, 0), var(--dy, 0)) scale(0.2);
+  }
 }
 
 /* --------------------------------------------------------------------------

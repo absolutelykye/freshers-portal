@@ -92,6 +92,7 @@ export default function FAQPage() {
                   key={faq.id}
                   id={`faq-${faq.id}`}
                   className={`faq-item ${isOpen ? 'open' : ''}`}
+                  style={{ '--faq-accent': tagColor }}
                 >
                   <button
                     type="button"

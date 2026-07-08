@@ -13,6 +13,7 @@ import campusHero from '../assets/campus-hero.jpeg'
 import freshersGuideLogo from '../assets/freshers-guide-logo.png'
 import SharedNav from '../components/SharedNav.jsx'
 import SharedFooter from '../components/SharedFooter.jsx'
+import FidgetAtom from '../components/FidgetAtom.jsx'
 import { ScrollReveal, StaggerGrid, StaggerItem } from '../components/ScrollReveal.jsx'
 import { CLUBS } from '../data/clubsData'
 import { FAQS } from '../data/faqsData'
@@ -40,6 +41,7 @@ const starterCards = [
     body: 'Learn the rhythm of campus, hostels, canteens, and the shortcuts people actually use.',
     action: 'Walk the map',
     to: '/gallery?loc=hostels',
+    accent: 'var(--cyan)',
   },
   {
     code: '// 02',
@@ -47,6 +49,7 @@ const starterCards = [
     body: 'Reach out to second-years for the stuff the handbook never explains properly.',
     action: 'Open contacts',
     href: '#contact',
+    accent: 'var(--pink)',
   },
   {
     code: '// 03',
@@ -54,6 +57,7 @@ const starterCards = [
     body: 'Preview hostels, labs, sports spaces, and campus landmarks before you arrive.',
     action: 'Browse photos',
     to: '/gallery',
+    accent: 'var(--amber)',
   },
   {
     code: '// 04',
@@ -61,8 +65,16 @@ const starterCards = [
     body: 'Get fast answers about academics, health, safety, transport, and campus basics.',
     action: 'Read answers',
     to: '/faqs',
+    accent: 'var(--violet)',
   },
 ]
+
+const contactFilterAccents = {
+  All: 'var(--cyan)',
+  WhatsApp: '#4ade80',
+  Instagram: '#ff7ac2',
+  Telegram: '#6bb7ff',
+}
 
 const iiserLogoUrl =
   'https://iiserbpr.ac.in/webcontrol/uploads/file_upload/Logo_6936_X_22001728276596.png'
@@ -78,11 +90,32 @@ function contactIcon(type) {
   return <FaWhatsapp aria-hidden="true" />
 }
 
-/* Counts up from 0 when scrolled into view */
-function StatCounter({ value, suffix = '', label }) {
+/* Counts up from 0 when scrolled into view; click to replay the count */
+function StatCounter({ value, suffix = '', label, accent = 'var(--cyan)' }) {
   const reduceMotion = useReducedMotion()
   const ref = useRef(null)
+  const rafRef = useRef(0)
   const [display, setDisplay] = useState(reduceMotion ? value : 0)
+
+  function runCount() {
+    if (reduceMotion) {
+      setDisplay(value)
+      return
+    }
+
+    cancelAnimationFrame(rafRef.current)
+    const duration = 1100
+    const start = performance.now()
+
+    const tick = (now) => {
+      const t = Math.min((now - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - t, 3)
+      setDisplay(Math.round(eased * value))
+      if (t < 1) rafRef.current = requestAnimationFrame(tick)
+    }
+
+    rafRef.current = requestAnimationFrame(tick)
+  }
 
   useEffect(() => {
     if (reduceMotion) return undefined
@@ -90,23 +123,11 @@ function StatCounter({ value, suffix = '', label }) {
     const node = ref.current
     if (!node) return undefined
 
-    let raf = 0
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return
         observer.disconnect()
-
-        const duration = 1100
-        const start = performance.now()
-
-        const tick = (now) => {
-          const t = Math.min((now - start) / duration, 1)
-          const eased = 1 - Math.pow(1 - t, 3)
-          setDisplay(Math.round(eased * value))
-          if (t < 1) raf = requestAnimationFrame(tick)
-        }
-
-        raf = requestAnimationFrame(tick)
+        runCount()
       },
       { threshold: 0.4 },
     )
@@ -115,17 +136,98 @@ function StatCounter({ value, suffix = '', label }) {
 
     return () => {
       observer.disconnect()
-      cancelAnimationFrame(raf)
+      cancelAnimationFrame(rafRef.current)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, reduceMotion])
 
   return (
-    <div className="stat-card way-card" ref={ref}>
+    <button
+      type="button"
+      className="stat-card way-card"
+      ref={ref}
+      style={{ '--card-accent': accent }}
+      onClick={runCount}
+      aria-label={`${value}${suffix} ${label} — click to replay`}
+    >
       <span className="stat-value">
         {display}
         <em>{suffix}</em>
       </span>
       <span className="stat-label">{label}</span>
+    </button>
+  )
+}
+
+/* Stack of campus polaroids; click to shuffle the next photo to the front */
+function PhotoStack() {
+  const photos = useMemo(
+    () =>
+      GALLERY_LOCATIONS.filter((location) => location.images.length > 0)
+        .slice(0, 4)
+        .map((location) => ({ src: location.images[0].src, title: location.title })),
+    [],
+  )
+  const [top, setTop] = useState(0)
+
+  if (photos.length === 0) return null
+
+  return (
+    <div className="photo-stack-wrap">
+      <button
+        type="button"
+        className="photo-stack"
+        onClick={() => setTop((current) => (current + 1) % photos.length)}
+        aria-label="Shuffle campus photos"
+      >
+        {photos.map((photo, index) => {
+          const order = (index - top + photos.length) % photos.length
+          return (
+            <figure className={`photo-stack-card stack-pos-${order}`} key={photo.src}>
+              <img src={photo.src} alt={photo.title} loading="lazy" decoding="async" />
+              <figcaption>{photo.title}</figcaption>
+            </figure>
+          )
+        })}
+      </button>
+      <p className="photo-stack-hint">tap to shuffle</p>
+    </div>
+  )
+}
+
+/* Decorative constellation, dots twinkle on staggered delays */
+function ConstellationArt() {
+  return (
+    <svg className="constellation" viewBox="0 0 220 170" aria-hidden="true">
+      <path
+        className="constel-line"
+        d="M28 128 L64 66 L118 92 L152 34 L196 58 M64 66 L96 22 M118 92 L132 142"
+      />
+      <circle className="constel-dot" cx="28" cy="128" r="3.4" />
+      <circle className="constel-dot" cx="64" cy="66" r="4.2" />
+      <circle className="constel-dot" cx="96" cy="22" r="3" />
+      <circle className="constel-dot" cx="118" cy="92" r="4.6" />
+      <circle className="constel-dot" cx="152" cy="34" r="3.6" />
+      <circle className="constel-dot" cx="196" cy="58" r="3.2" />
+      <circle className="constel-dot" cx="132" cy="142" r="3" />
+    </svg>
+  )
+}
+
+/* Rolling waves — a nod to the beach 10 minutes from campus */
+function WaveDivider() {
+  return (
+    <div className="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 90" preserveAspectRatio="none">
+        <path
+          className="wave wave-1"
+          d="M0 52 Q 180 24 360 52 T 720 52 T 1080 52 T 1440 52 T 1800 52 T 2160 52 T 2520 52 T 2880 52 V 90 H 0 Z"
+        />
+        <path
+          className="wave wave-2"
+          d="M0 62 Q 180 38 360 62 T 720 62 T 1080 62 T 1440 62 T 1800 62 T 2160 62 T 2520 62 T 2880 62 V 90 H 0 Z"
+        />
+      </svg>
     </div>
   )
 }
@@ -279,10 +381,10 @@ export default function Home() {
 
         <ScrollReveal className="section stats-section" aria-label="Campus in numbers">
           <div className="stats-grid">
-            <StatCounter value={CLUBS.length} suffix="+" label="Student clubs" />
-            <StatCounter value={galleryPhotoCount} suffix="+" label="Campus photos" />
-            <StatCounter value={FAQS.length} label="Questions answered" />
-            <StatCounter value={SENIORS.length} label="Seniors on call" />
+            <StatCounter value={CLUBS.length} suffix="+" label="Student clubs" accent="var(--cyan)" />
+            <StatCounter value={galleryPhotoCount} suffix="+" label="Campus photos" accent="var(--violet)" />
+            <StatCounter value={FAQS.length} label="Questions answered" accent="var(--amber)" />
+            <StatCounter value={SENIORS.length} label="Seniors on call" accent="var(--pink)" />
           </div>
         </ScrollReveal>
 
@@ -302,7 +404,11 @@ export default function Home() {
               {starterCards.map((card) => (
                 <StaggerItem className="starter-grid-cell" key={card.title}>
                   {card.to ? (
-                    <Link className="event-card starter-card-link way-card" to={card.to}>
+                    <Link
+                      className="event-card starter-card-link way-card"
+                      to={card.to}
+                      style={{ '--card-accent': card.accent }}
+                    >
                       <span className="card-code">{card.code}</span>
                       <h3>{card.title}</h3>
                       <p>{card.body}</p>
@@ -312,7 +418,11 @@ export default function Home() {
                       </span>
                     </Link>
                   ) : (
-                    <a className="event-card starter-card-link way-card" href={card.href}>
+                    <a
+                      className="event-card starter-card-link way-card"
+                      href={card.href}
+                      style={{ '--card-accent': card.accent }}
+                    >
                       <span className="card-code">{card.code}</span>
                       <h3>{card.title}</h3>
                       <p>{card.body}</p>
@@ -337,17 +447,23 @@ export default function Home() {
               Browse all clubs
             </Link>
           </div>
+          <div className="preview-art" aria-hidden="true">
+            <ConstellationArt />
+          </div>
         </ScrollReveal>
 
         <ScrollReveal className="section placeholder-section way-section" id="faqs">
-          <div className="section-heading">
+          <div className="section-heading gallery-preview-heading">
             <p className="eyebrow">Questions</p>
             <h2>FAQs</h2>
             <p>The answers people usually collect over a month are here in one sitting.</p>
+            <Link to="/faqs" className="secondary-button btn-secondary gallery-view-button">
+              View all FAQs
+            </Link>
           </div>
-          <Link to="/faqs" className="secondary-button btn-secondary">
-            View all FAQs
-          </Link>
+          <div className="preview-art">
+            <FidgetAtom />
+          </div>
         </ScrollReveal>
 
         <ScrollReveal className="section placeholder-section gallery-preview-section way-section" id="gallery">
@@ -359,7 +475,12 @@ export default function Home() {
               View full gallery
             </Link>
           </div>
+          <div className="preview-art">
+            <PhotoStack />
+          </div>
         </ScrollReveal>
+
+        <WaveDivider />
 
         <ScrollReveal className="contact-section way-section" id="contact">
           <div className="contact-header">
@@ -376,6 +497,7 @@ export default function Home() {
                 key={filter}
                 type="button"
                 className={`secondary-button senior-filter-chip ${contactFilter === filter ? 'is-active' : ''}`}
+                style={{ '--chip-accent': contactFilterAccents[filter] }}
                 onClick={() => setContactFilter(filter)}
               >
                 {filter}

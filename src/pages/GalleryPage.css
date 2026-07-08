@@ -1,5 +1,5 @@
 .gallery-page-intro .eyebrow {
-  color: var(--violet);
+  color: var(--pink);
 }
 
 .gallery-page-main {
@@ -27,6 +27,23 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 16px;
+}
+
+/* rotate accent colors across the location grid */
+.gallery-location-list > :nth-child(4n + 1) {
+  --card-accent: var(--cyan);
+}
+
+.gallery-location-list > :nth-child(4n + 2) {
+  --card-accent: var(--pink);
+}
+
+.gallery-location-list > :nth-child(4n + 3) {
+  --card-accent: var(--amber);
+}
+
+.gallery-location-list > :nth-child(4n) {
+  --card-accent: var(--violet);
 }
 
 /* Location card — photo cover with glass caption bar */
@@ -81,8 +98,8 @@
 
 .gallery-location-option:hover {
   transform: translateY(-5px);
-  border-color: rgba(69, 227, 255, 0.4);
-  box-shadow: var(--shadow-md), 0 0 36px rgba(69, 227, 255, 0.08);
+  border-color: color-mix(in srgb, var(--card-accent, var(--cyan)) 45%, transparent);
+  box-shadow: var(--shadow-md), 0 0 36px color-mix(in srgb, var(--card-accent, var(--cyan)) 10%, transparent);
 }
 
 .gallery-location-option:hover::after {

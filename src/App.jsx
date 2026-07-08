@@ -6,6 +6,7 @@ import GalleryPage from './pages/GalleryPage.jsx'
 import ClubsPage from './pages/ClubsPage.jsx'
 import FAQPage from './pages/FAQpage'
 import GlowCursor from './components/GlowCursor.jsx'
+import BackgroundFX from './components/BackgroundFX.jsx'
 import './App.css'
 
 function BackToTop() {
@@ -79,8 +80,42 @@ export default function App() {
     return () => document.removeEventListener('pointerdown', onPointerDown)
   }, [])
 
+  /* Confetti-ish sparkle burst on every click */
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
+
+    const COLORS = ['#45e3ff', '#8f7bff', '#ffb454', '#ff7ac2', '#4ade80']
+
+    const onClick = (event) => {
+      if (event.target.closest?.('input, textarea, select')) return
+      if (document.querySelectorAll('.click-burst').length > 4) return
+
+      const burst = document.createElement('span')
+      burst.className = 'click-burst'
+      burst.style.left = `${event.clientX}px`
+      burst.style.top = `${event.clientY}px`
+
+      for (let i = 0; i < 7; i++) {
+        const spark = document.createElement('i')
+        const angle = (i / 7) * Math.PI * 2 + Math.random() * 0.7
+        const distance = 24 + Math.random() * 26
+        spark.style.setProperty('--dx', `${Math.cos(angle) * distance}px`)
+        spark.style.setProperty('--dy', `${Math.sin(angle) * distance}px`)
+        spark.style.background = COLORS[(Math.random() * COLORS.length) | 0]
+        burst.appendChild(spark)
+      }
+
+      document.body.appendChild(burst)
+      window.setTimeout(() => burst.remove(), 700)
+    }
+
+    document.addEventListener('click', onClick, { passive: true })
+    return () => document.removeEventListener('click', onClick)
+  }, [])
+
   return (
     <>
+      <BackgroundFX />
       {finePointer ? <GlowCursor /> : null}
       <Routes>
         <Route path="/" element={<Home />} />
